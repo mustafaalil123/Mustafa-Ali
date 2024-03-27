@@ -3,28 +3,17 @@ import {
   Flex,
   Avatar,
   Box,
-  Text,
-  Badge,
-  Stack,
-  Link,
-  UnorderedList,
-  ListItem,
-  useColorModeValue
 } from '@chakra-ui/react';
 import { MotionBox, MotionFlex } from 'components/shared/animations/motion';
 import Header from 'components/shared/header';
-import NextLink from 'next/link';
 import { useLinkColor } from 'components/theme';
-import PopularArticles from './PopularArticles';
 import { BlogPostProps } from 'interfaces/interface';
-import { newContent } from 'data/data';
 
 const ANIMATION_DURATION = 0.5;
 const ORANGE = '#ff9400';
 const emojis = ['👋', '👍', '🖐'];
 
-const Home: React.FC<BlogPostProps> = (props) => {
-  const { posts } = props;
+const Home: React.FC<BlogPostProps> = () => {
   const linkColor = useLinkColor();
   const [showEmogi, setShowEmoji] = useState(false);
   const [emojiCounter, setEmojiCounter] = useState(-1);
@@ -165,60 +154,12 @@ const Home: React.FC<BlogPostProps> = (props) => {
         zIndex={1}
       >
         <Box mt={10}>
-          {/* <ContentBox linkColor={linkColor} /> */}
-          {/* <PopularArticles posts={posts} /> */}
         </Box>
       </MotionBox>
     </Flex>
   );
 };
 
-const ContentBox = ({ linkColor }) => {
-  return (
-    <Stack
-      mb={10}
-      mx={[0, 0, 10]}
-      padding={4}
-      align="start"
-      borderLeft="4px solid"
-      borderColor={linkColor}
-      color={'whatsapp'}
-      _hover={{ shadow: 'lg' }}
-      backgroundColor={useColorModeValue('gray.100', '#1e2533')}
-      rounded="sm"
-      fontSize="md"
-    >
-      <Text
-        textAlign="center"
-        color="#53c8c4"
-        fontWeight="bold"
-        fontSize={['md', 'lg']}
-        variant="gradient"
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        fromcolor="blue.400"
-        tocolor="red.500"
-      >
-        Content:
-      </Text>
-      <UnorderedList textAlign="left" paddingLeft={5} m={0}>
-        {newContent.map((content, index) => (
-          <ListItem key={index}>
-            <NextLink href={content.link} passHref>
-              <Link color={linkColor}>
-                {content.text}
-                {content.showNewTag && (
-                  <Badge ml="1" colorScheme="green">
-                    New
-                  </Badge>
-                )}
-              </Link>
-            </NextLink>
-          </ListItem>
-        ))}
-      </UnorderedList>
-    </Stack>
-  );
-};
+
 
 export default Home;
