@@ -1,52 +1,36 @@
 export const companies = [
   {
-    title: 'Nalikes Studio',
-    alt: 'NS image',
-    role: 'Senior Software Engineer',
-    skills: ['web3', 'nextjs', 'rails', 'typescript', 'react', 'aws', 'heroku'],
-    period: '2023 - Present',
-    logo: '/assets/images/logos/nalikes-studio.png'
-  },
-  {
-    title: 'Big Wolf Games',
+    title: 'Qbatch',
     alt: 'BW image',
-    role: 'Senior Software Engineer',
-    skills: ['ruby', 'rails', 'typescript', 'react', 'pixi', 'aws', 'heroku', 'serverless'],
-    period: '2021 - 2023',
-    logo: '/assets/images/logos/bigwolf.png'
+    role: 'Software Engineer',
+    skills: ['MERN', 'node', 'aws', 'nginx', 'next', 'react', 'nest', 'electron', 'typescript', 'javascript'],
+    period: 'Jul 2022 - Present',
+    logo: '/assets/images/logos/qbatch.png'
   },
   {
-    title: 'Phaedra Solutions',
+    title: 'WeTeck',
     alt: 'PS image',
-    role: 'Senior Software Engineer',
-    skills: ['ruby', 'rails', 'typescript', 'javascript', 'react', 'aws'],
-    period: '2019 - 2021',
-    logo: '/assets/images/logos/phaedra.jpeg'
+    role: 'Software Engineer (Part Time)',
+    skills: ['golang', 'node', 'aws', 'nginx', 'next', 'react', 'typescript', 'javascript' ],
+    period: 'Mar 2023 - Sep 2023',
+    logo: '/assets/images/logos/weteck.png'
   },
   {
-    title: 'Brainx Technologies',
+    title: 'Netixsol',
+    alt: 'Netixsol image',
+    role: 'Blockchain Intern',
+    skills: ['javascript', 'react', 'solidity', 'ethereum','node'],
+    period: 'Jan 2022 - Feb 2022',
+    logo: '/assets/images/logos/netixsol.png'
+  },
+  {
+    title: 'Mindstorm Studios',
     alt: 'BT image',
-    role: 'Software Engineer',
-    skills: ['ruby', 'rails', 'javascript', 'python'],
-    period: '2018 - 2019',
-    logo: '/assets/images/logos/brainxtech.png'
+    role: 'Game Developer Intern',
+    skills: ['unity3D', 'hyper casual games', 'story making', 'designing'],
+    period: 'Aug 2021 - Sep 2021',
+    logo: '/assets/images/logos/mindstorm.jpeg'
   },
-  // {
-  //   title: "Codenya Studio",
-  //   alt: "CS image",
-  //   role: "Co-founder, CTO",
-  //   skills: ["ruby", "rails", "python", "typescript", "react", "aws"],
-  //   period: "2018 - Present",
-  //   logo: '/assets/images/logos/codenya.png'
-  // },
-  {
-    title: 'Brainplow',
-    alt: 'Brainplow image',
-    role: 'Software Engineer',
-    skills: ['javascript', 'python', 'angular'],
-    period: '2017 - 2018',
-    logo: '/assets/images/logos/brainplow.jpg'
-  }
 ];
 
 export const institutes = [
@@ -55,9 +39,9 @@ export const institutes = [
     title: 'National University of Computer and Emerging Sciences',
     alt: 'Nuces image',
     role: "Bachelor's Degree in Computer Science",
-    skills: ['project management', 'web development', 'data structures'],
-    period: '2013 - 2017',
-    startingYear: '2013',
+    skills: ['project management', 'web development', 'data structures', 'usuability engineering', 'game development'],
+    period: '2018 - 2022',
+    startingYear: '2018',
     logo: '/assets/images/logos/fast.png',
     awards: [
       {
@@ -82,11 +66,11 @@ export const institutes = [
 
 export const skillsArray = [
   {
-    name: 'Ruby on Rails',
+    name: 'NodeJs',
     description: 'Web development',
-    link: 'https://rubyonrails.org/',
+    link: 'https://nodejs.org/en',
     type: 'development',
-    image: '/assets/images/skills/rails.png'
+    image: '/assets/images/skills/nodeJs.png'
   },
   {
     name: 'React',
@@ -94,13 +78,6 @@ export const skillsArray = [
     link: 'https://reactjs.org/',
     type: 'development',
     image: '/assets/images/skills/react.png'
-  },
-  {
-    name: 'Ruby',
-    description: 'Web development, scrapping',
-    link: 'https://www.ruby-lang.org/en/',
-    type: 'development',
-    image: '/assets/images/skills/ruby.png'
   },
   {
     name: 'Python',
@@ -138,11 +115,25 @@ export const skillsArray = [
     image: '/assets/images/skills/css3.png'
   },
   {
+    name: 'Tailwind Css',
+    description: 'Web design',
+    link: 'https://tailwindcss.com/',
+    type: 'design',
+    image: '/assets/images/skills/tailwind.png'
+  },
+  {
     name: 'Bootstrap',
     description: 'Web design',
     link: 'https://getbootstrap.com/',
     type: 'design',
     image: '/assets/images/skills/bootstrap.png'
+  },
+  {
+    name: 'Material UI',
+    description: 'Web design',
+    link: 'https://mui.com/material-ui/',
+    type: 'design',
+    image: '/assets/images/skills/css3.png'
   },
   {
     name: 'Postgres',
@@ -164,6 +155,13 @@ export const skillsArray = [
     link: 'https://redis.io/',
     type: 'database',
     image: '/assets/images/skills/redis.png'
+  },
+  {
+    name: 'Docker',
+    description: 'Devops',
+    link: 'https://www.docker.com/',
+    type: 'devops',
+    image: '/assets/images/skills/docker.png'
   },
   {
     name: 'Heroku',
