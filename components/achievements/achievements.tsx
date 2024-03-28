@@ -2,12 +2,11 @@ import * as React from 'react'
 import {
   FiPackage,
   FiHome,
-  FiEdit2,
   FiUsers,
   FiBarChart2,
 } from 'react-icons/fi'
 import { FaTools } from 'react-icons/fa'
-import { VStack, Heading, Box, Link, LinkProps } from '@chakra-ui/react'
+import { VStack, Box, Link, LinkProps } from '@chakra-ui/react'
 import { TimelineItem } from './Timeline'
 import { PageSlideFade } from 'components/shared/animations/page-transitions'
 import Header from 'components/shared/header'
@@ -35,20 +34,6 @@ const ExternalLink: React.FC<ExternalLinkProps> = ({
   )
 }
 
-const InternalLink: React.FC<ExternalLinkProps> = ({
-  url,
-  linkProps,
-  text,
-  ...props
-}) => {
-  return (
-    <NextLink href={url} passHref>
-      <Link {...linkProps} {...props}>
-        {text}
-      </Link>
-    </NextLink>
-  )
-}
 const Achievements = () => {
   const linkColor = useLinkColor()
 
@@ -61,97 +46,74 @@ const Achievements = () => {
       </Box>
       <VStack textAlign="start" align="start" mb={5}>
         <Box zIndex={5}>
-          <Heading fontSize="2xl" fontWeight="600" my={5}>
-            2021
-          </Heading>
           <Box>
             <TimelineItem icon={FaTools}>
-              Learnt{' '}
+            FYP Awarded Selection by
               <ExternalLink
                 color={linkColor}
-                url="https://www.typescriptlang.org"
-                text={'Typescript'}
+                url="https://ignite.org.pk/"
+                text={' Ignite Pakistan'}
                 target="_blank"
               />{' '}
-              and{' '}
-              <ExternalLink
+            </TimelineItem>
+            <TimelineItem icon={FiUsers}>TAship and Dean's List Certificates by <ExternalLink
                 color={linkColor}
-                url="https://nextjs.org"
-                text={'Next.js'}
+                url="https://www.nu.edu.pk/"
+                text={' FAST NUCES'}
                 target="_blank"
-              />
-            </TimelineItem>
-            <TimelineItem icon={FiUsers}>Became a dad ❤️</TimelineItem>
+              />{' '} </TimelineItem>
             <TimelineItem icon={FiPackage}>
-              Published 3 posts on my portfolio website{' '}
-              <InternalLink color={linkColor} url="/blog" text={'Blog'} />
-            </TimelineItem>
-            <TimelineItem icon={FiPackage}>
-              Published or contributed to{' '}
-              <InternalLink
+            Semifinalist in Speed Programming Competition at
+            <ExternalLink
                 color={linkColor}
-                url="/open-source"
-                text={'20+ open-source repositories'}
-              />
+                url="https://cyberhackathon.pk/"
+                text={' Digital Pakistan Cyber Security Hackathon'}
+                target="_blank"
+              />{' '}
+             (2021)
+            </TimelineItem>
+            <TimelineItem icon={FiPackage}>
+            Game Development course from Michigan State University, 
+            <ExternalLink
+                color={linkColor}
+                url="https://www.coursera.org/"
+                text={' Coursera'}
+                target="_blank"
+              />{' '}
             </TimelineItem>
             <TimelineItem icon={FiBarChart2}>
-              Collected 34k+ posts views and 1.5k+ total reactions on{' '}
+              Graduated from
               <ExternalLink
                 color={linkColor}
-                url="https://dev.to/m_ahmad"
-                text={'Dev.to'}
+                url="https://mlabs.co/game-jams/rookie-game-jam-2021/"
+                text={' Rookie Game Jam, '}
                 target="_blank"
               />
+               Only 269 out of 1600 applicants could clear this program from all over the pakistan.
             </TimelineItem>
             <TimelineItem icon={FiHome} skipTrail>
-              Rebuilt my portfolio website with React, ChakraUI and
-              Framer-motion,{' '}
+              Runner Up at 
               <ExternalLink
                 color={linkColor}
-                url="https://github.com/MA-Ahmad/myPortfolio"
-                text={'source on Github'}
+                url="https://www.au.edu.pk/pages/Faculties/Mechatronics_Biomedical_Engineering/Departments/Biomedical/Extra_Curricular_Activities.aspx"
+                text={" AirTech'19"}
+                target="_blank"
+              />
+              .
+            </TimelineItem>
+            <TimelineItem icon={FiBarChart2} skipTrail>
+              Semifinalist at LUMS  
+              <ExternalLink
+                color={linkColor}
+                url="https://www.intechww.com/codinguru-2-0"
+                text={" Coding Guru 2.0"}
                 target="_blank"
               />
               .
             </TimelineItem>
           </Box>
         </Box>
-        <Box zIndex={5}>
-          <Heading fontSize="2xl" fontWeight="600" my={5}>
-            2020
-          </Heading>
-          <Box>
-            <TimelineItem icon={FiEdit2}>Wrote 5 blog posts</TimelineItem>
-            <TimelineItem icon={FiPackage}>
-              Published or contributed to{' '}
-              <ExternalLink
-                color={linkColor}
-                url="https://github.com/MA-Ahmad?tab=repositories"
-                text={'32 open-source repositories'}
-                target="_blank"
-              />
-            </TimelineItem>
-            <TimelineItem icon={FiBarChart2}>
-              Collected 650+ post views and 15+ total reactions on{' '}
-              <ExternalLink
-                color={linkColor}
-                url="https://dev.to/m_ahmad"
-                text={'Dev.to'}
-                target="_blank"
-              />
-            </TimelineItem>
-            <TimelineItem icon={FiHome} skipTrail>
-              Built my portfolio website with React and ChakraUI,{' '}
-              <ExternalLink
-                color={linkColor}
-                url="https://github.com/MA-Ahmad/portfolio2"
-                text={'source on Github'}
-                target="_blank"
-              />
-              .
-            </TimelineItem>
-          </Box>
-        </Box>
+
       </VStack>
     </PageSlideFade>
   )
