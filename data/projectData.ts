@@ -1,73 +1,47 @@
 export const projectsList = [
   {
-    title: 'Smata',
-    imageLight: '/assets/images/projects/cover/smata.png',
+    title: 'Ecom Circles',
+    imageLight: '/assets/images/projects/cover/ecomcircles.png',
     blurHash: 'L4ADc400P*Zi4Tu1y;Qo00pH#YXl',
-    site: 'https://smata.com/',
+    site: 'https://app.ecomcircles.com/',
     description:
-      'SMATA IS AN ALL-IN-ONE CLOUD-BASED SOLUTION, INTEGRATING MANAGEMENT, COMMUNICATION & ACCOUNTING FUNCTIONS.',
-    techStack: ['Rails', 'React', 'Javascript']
+      'An application for dropshipping automation that manages repricing, item listing, order processing, and inventory management for U.S. marketplaces, including Amazon and Walmart.',
+    techStack: ['MERN', 'AWS', 'Redis', 'Nginx', 'Redux']
   },
   {
-    title: 'Peterpitch',
-    imageLight: '/assets/images/projects/cover/peterpitch.png',
+    title: 'Store Filter',
+    imageLight: '/assets/images/projects/cover/storefilter.png',
     blurHash: 'L4ADc400P*Zi4Tu1y;Qo00pH#YXl',
-    site: 'https://peterpitch.com/',
+    site: 'https://app.storefilter.com/',
     description:
-      'Peterpitch is a tool that takes the fun in your company seriously and turns your meetings into real performance boosters.',
-    techStack: ['Rails', 'React', 'Javascript']
+     "A competitor analysis platform that focuses on keywords, ads, Shopify stores, and sales funnels to help businesses grow and understand their competitors' strategies.",
+    techStack: ['Vue 3', 'VueX', 'Javascript']
   },
   {
-    title: 'TemplatesKart',
-    imageLight: '/assets/images/projects/cover/templateskart.png',
+    title: 'Secur Watch',
+    imageLight: '/assets/images/projects/cover/securwatch.png',
     blurHash: 'L4ADc400P*Zi4Tu1y;Qo00pH#YXl',
-    site: 'https://templateskart.com',
-    gitHub: 'https://github.com/MA-Ahmad/templatesKart',
+    site: 'http://secur-watch.com/',
     description:
-      'TemplatesKart provides the best Chakra UI templates. Production-ready hand crafted Projects and Components built on top of ChakraUI.',
-    techStack: ['React', 'Nextjs', 'ChakraUI']
+      'An e-commerce website offering watches along with their historical reports, secured using blockchain technology.',
+    techStack: ['Node', 'Next', 'MUI', 'Typescript', 'Blockchain']
   },
   {
-    title: 'Notch',
-    site: 'https://www.hellonotch.com/',
-    imageLight: '/assets/images/projects/cover/notch.png',
+    title: 'MJM Tools',
+    site: 'http://18.191.227.65/',
+    imageLight: '/assets/images/projects/cover/mjmtools.png',
     blurHash: 'L0Aer?tjH[tPyAayj[j[00ay%xkB',
     description:
-      'This is a project management website for design and procurement teams. It helps to collaborate and manage all of your floor plans in one place.',
-    techStack: ['Rails', 'Javascript']
+      "This is a management website designed to consolidate all of a user's Amazon marketplace activities into a single dashboard, including the management of listings, products, orders, sales, profits, and refunds.",
+    techStack: ['Next', 'Javascript', 'Redux Toolkit']
   },
   {
-    title: 'Workof Ecommerce',
-    imageLight: '/assets/images/projects/cover/workof.png',
+    title: 'Car Auction',
+    imageLight: '/assets/images/projects/cover/carcouk.png',
     blurHash: 'L2M5%%0000EN00I:-oIp00kC?^sl',
-    site: 'https://workof.com/',
+    site: 'http://54.245.33.176:8443/login',
     description:
-      'This is an Ecommerce furniture site. It provides a single platform to multiple vendors where they can put their products on sale.',
-    techStack: ['Rails', 'Javascript']
+      'An auction website that allows users to bid on vehicles such as cars and bikes, facilitates invoice generation, vehicle delivery, and collects data on the auction winners.',
+    techStack: ['React', 'MUI', 'Typescript']
   },
-  {
-    title: 'Souq of Qatar',
-    imageLight: '/assets/images/projects/cover/souq.png',
-    blurHash: 'L1O^uE0679I00AGT?.H{00y7p2tK',
-    site: 'https://www.souqofqatar.com/',
-    description:
-      'Souq of Qatar is online comparison website. This website is independent of any retailers, it displays the products of all the major stores.',
-    techStack: ['Rails', 'Javascript']
-  },
-  {
-    title: 'GoSave',
-    imageLight: '/assets/images/projects/cover/gosave.png',
-    blurHash: 'L09sWSxdH;s?%6axWAfk00V?%jax',
-    site: 'https://gosavehq.com/',
-    description: `The GoSave app let's you send allowances, assign chores, and approve spending all from your smartphone.`,
-    techStack: ['Rails']
-  },
-  {
-    title: 'Hiredroid',
-    imageLight: '/assets/images/projects/cover/hiredroid.png',
-    blurHash: 'L09sWSxdH;s?%6axWAfk00V?%jax',
-    site: 'https://hiredroid.com',
-    description: `Hiredroid help professionals reach the very pinnacle and stay there. For professionals who aspire perfection, we have made it easy for you by introducing skill-based hiring system, to help you attract the best talent from around the world.`,
-    techStack: ['React', 'Nodejs']
-  }
 ];
