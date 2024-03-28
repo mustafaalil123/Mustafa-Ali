@@ -41,7 +41,6 @@ const mobileLinks = [
 ];
 
 const dropdownLinks = [
-  { name: 'Projects', path: '/projects' },
   { name: 'Tech Stack', path: '/tech-stack' },
   { name: 'Achievements', path: '/achievements' },
 ];
