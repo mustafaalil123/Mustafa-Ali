@@ -116,7 +116,7 @@ const Home: React.FC<BlogPostProps> = () => {
           <Box as="h2" fontSize="2xl" fontWeight="400" textAlign="left">
             My name is{' '}
             <Box as="strong" fontWeight="600">
-              Mustafa 
+             M Mustafa Ali
             </Box>{' '}
             and I&apos;m a{' '}
             <Box as="span" whiteSpace="nowrap">
@@ -131,8 +131,7 @@ const Home: React.FC<BlogPostProps> = () => {
             </Box>
           </Box>
           <Box as="h2" fontSize="2xl" fontWeight="400" mt={5} textAlign="left">
-            This is my digital garden, where I write about the things I&apos;m working on and share
-            what I&apos;ve learned. 😊
+          Discover My World of MERN Development, Where Every Line of Code is a Step Towards Connecting and Creating Better Web Experiences.
           </Box>
         </MotionFlex>
       </Flex>
