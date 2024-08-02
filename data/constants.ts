@@ -2,8 +2,8 @@
  * LINKS and USERNAMES
  */
 export const GITHUB_API_URL = 'https://api.github.com';
-export const GITHUB_USERNAME = 'MA-Ahmad';
-export const GITHUB_REPO = 'myportfolio';
+export const GITHUB_USERNAME = 'mustafaalil123';
+export const GITHUB_REPO = 'Mustafa-Ali';
 export const DEVTO_API_URL = 'https://dev.to/api';
 
 /**

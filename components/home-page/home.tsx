@@ -114,24 +114,14 @@ const Home: React.FC<BlogPostProps> = () => {
             </MotionBox>
           </Box>
           <Box as="h2" fontSize="2xl" fontWeight="400" textAlign="left">
-            My name is{' '}
+            I am 
             <Box as="strong" fontWeight="600">
-             M Mustafa Ali
+            &nbsp; M Mustafa Ali,
             </Box>{' '}
-            and I&apos;m a{' '}
-            <Box as="span" whiteSpace="nowrap">
-              Full Stack Developer and
-            </Box>{' '}
-            <Box as="span" whiteSpace="nowrap">
-              an open source lover&nbsp;
-            </Box>
-            from{' '}
-            <Box as="span" whiteSpace="nowrap">
-              Pakistan 🇵🇰
-            </Box>
           </Box>
           <Box as="h2" fontSize="2xl" fontWeight="400" mt={5} textAlign="left">
-          Discover My World of MERN Development, Where Every Line of Code is a Step Towards Connecting and Creating Better Web Experiences.
+          A Full Stack Engineer with a passion for developing efficient, user-centric web solutions. Throughout my career, I’ve consistently demonstrated a strong ability to take initiative and lead diverse teams towards successful project outcomes.
+            I excel in collaborative environments but also enjoy independently diving deep into complex problems. My approach combines analytical thinking with creativity, allowing me to tackle issues from multiple angles.
           </Box>
         </MotionFlex>
       </Flex>
