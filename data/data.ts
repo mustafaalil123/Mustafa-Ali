@@ -1,19 +1,59 @@
+
 export const companies = [
+ 
   {
+    title:'Switchboard',
+    alt:'switchboard',
+    role:"Software Engineer",
+    skills:['MERN','typescript','javascript','nextjs','postgre Sql'],
+    period: 'Sep 2024 - Present',
+    logo:"/assets/images/logos/sb_logo.jpeg",
+    points:[
+      'Reduced high and severe vulnerabilities across 6 repositories, improving security and compliance by 100%.',
+      'Updated deprecated and irrelevant packages, enhancing overall application security by 10% to meet GDPR , SOC-2, and ISO-27001 standards',
+      'Revamped connection and operation modules,increasing customer engagement by 20%.',
+      'Integrated Drop Point, VoyFai, and SFTP systems,optimizing the app’s supplychain flow and reducing processing time by 25%',   
+      'Developed customizable widgets, enabling over 500 customers to integrate platforms such as Xero, MYOB, Dear Systems, Shopify, and Amazon Seller Central, reducing integration time by 30% through as imple script snippet embedded in their applications.',
+      'Implemented logging across the entire application, improving debugging efficiency by 40% and enhancing coding practices for smoother issue resolution.',     
+    ]
+  },
+
+ {
     title: 'Qbatch',
     alt: 'BW image',
     role: 'Software Engineer',
     skills: ['MERN', 'node', 'aws', 'nginx', 'next', 'react', 'nest', 'electron', 'typescript', 'javascript'],
-    period: 'Jul 2022 - Present',
-    logo: '/assets/images/logos/qbatch.png'
-  },
+    period: 'Jul 2022 - Jul 2024',
+    logo: '/assets/images/logos/qbatch.png',
+    points:[
+
+      ' Designed and implemented scalable,efficient backend systems using Node.js,FastAPI and Go(lang),achieving a 40% reduction in response times.',
+      ' Developed an efficient React-Redux on boarding feature, cutting user onboarding time by50%,reducing code complexity by 30%,and significantly enhancing user experience and app maintainability.',
+      'Skilled in building intuitive, responsive user interfaces using React.js, Vue.js, and Next.js, leading to a 15% increase in user engagement and a 25% improvement in overall user satisfaction',
+      ' Replaced MWS with AmazonSP-API using Node.js,improving API response times by 40% ,data accuracy by 35%,and overall efficiency by 50%',
+       'Successfully integrated essential e-commerce tools, including SPAPI (Amazon store handling APIs), Walmart APIs and Shopify APIs that reduce the order handling delays and errors by 50% in the application.',
+      ' Emphasizing usability and data-driven decision-making in the design and development process, increasing user adoption by 30% within the first three months.', 
+      ' Managed key server configuration,deployment,and optimization tasks, with a specific focus on AWS performance.',
+      'Integrated Stripe and PayPal payment methods into the application,enabling seamless processing of over 1,000 transactions monthly with a subscription model',
+      'Mentored 10+ junior developers, promoting a culture of learning and excellence in coding practices, leading to a 30% reduction in code review time and improved team productivity'
+    ]},
   {
+
     title: 'WeTeck',
     alt: 'PS image',
     role: 'Software Engineer (Part Time)',
     skills: ['golang', 'node', 'aws', 'nginx', 'next', 'react', 'typescript', 'javascript' ],
     period: 'Mar 2023 - Sep 2023',
-    logo: '/assets/images/logos/weteck.png'
+    logo: '/assets/images/logos/weteck.png',
+    points:[
+    'Revamped a traditional Node.js application into a robust system using Gomicro services architecture and Next.js, enhancing scalability by 40%',
+ 'Integrated messages from Instagram ,Facebook,LinkedIn,Gmail,and Slack into a single platform,leading to a 60% reduction in response times and a 30% improvement in app performance,significantly making it easy touse.',
+ 'Developed a unified communication hubusing Next.js,enhancing access and management of multi-source messages,resulting in a 35%increase in message retrieval speed and a 20% boost in overall platform usability',
+ 'Achieved scalability and cross-branch compatibility, facilitating efficient restaurant management and communication across locations, evidenced by a 40% improvement ininter-branch order processing speed.',
+ 'Significantly enhanced organizational communication efficiency by streamlining message management and reducing platform navigation time, achieving a 50% reduction in the time staff spends on managing communications.',
+ 'Use Redis for session management,reducing login times by 30% and improving system performance by 25%',
+ 'Setup EC2 for hosting, S3 for storage,and Docker with ECR and ECS,reducing server costs by 40% and improving performance by 35%'
+   ]
   },
   {
     title: 'Netixsol',
@@ -21,7 +61,8 @@ export const companies = [
     role: 'Blockchain Intern',
     skills: ['javascript', 'react', 'solidity', 'ethereum','node'],
     period: 'Jan 2022 - Feb 2022',
-    logo: '/assets/images/logos/netixsol.png'
+    logo: '/assets/images/logos/netixsol.png',
+ 
   },
   {
     title: 'Mindstorm Studios',
@@ -29,10 +70,12 @@ export const companies = [
     role: 'Game Developer Intern',
     skills: ['unity3D', 'hyper casual games', 'story making', 'designing'],
     period: 'Aug 2021 - Sep 2021',
-    logo: '/assets/images/logos/mindstorm.jpeg'
-  },
+    logo: '/assets/images/logos/mindstorm.jpeg',
+    points:[
+      'Developed a Hyper Casual Game using Unity3D,focusing on storywriting,enhancing game play cohesion, and character creation.',
+'      Participated in the Rookie GameJam , acompetitive event with over1,500 participants,and was among the 260 graduates.'
+]},
 ];
-
 export const institutes = [
   {
     short_title: 'FAST - NUCES',

@@ -1,4 +1,13 @@
 export const projectsList = [
+   {
+    title: 'SwitchBoard',
+    imageLight: '/assets/images/projects/switchboard.png',
+    blurHash: 'L4ADc400P*Zi4Tu1y;Qo00pH#YXl',
+    site: 'https://app.dev.switchboardcloud.com.au/',
+    description:
+     "Easily integrate and automate data with your partners. Automatically connect to your partners for automated, flexible, and cost-efficient supply chains, with end-to-end visibility",
+    techStack: ['Express','Nodejs', 'PostgreSQL' , 'Next', 'Javascript']
+  },
   {
     title: 'Ecom Circles',
     imageLight: '/assets/images/projects/cover/ecomcircles.png',

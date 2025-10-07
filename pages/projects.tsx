@@ -11,6 +11,7 @@ import {
   RightProjectLayoutLarge,
 } from 'components/layouts/projectLayout'
 import { ProjectProps } from 'interfaces/interface'
+import { useLinkColor } from 'components/theme'
 
 const title = 'Projects 📚'
 const subtitle =
@@ -20,13 +21,13 @@ const TURQUOISE = '#06b6d4'
 
 const Projects: NextPage<ProjectProps> = (props) => {
   const { projects } = props
-
+const linkcolor=useLinkColor();
   return (
     <Fragment>
       <PageLayout title={title} description={subtitle}>
         <PageSlideFade>
           <VStack align="start">
-            <Header underlineColor={TURQUOISE} mt={0} mb={2}>
+            <Header underlineColor={TURQUOISE} mt={0} mb={2} color={linkcolor}>
               Projects
             </Header>
             <Text
