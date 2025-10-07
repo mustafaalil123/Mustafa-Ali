@@ -4,11 +4,10 @@ import { BlogPostProps } from 'interfaces/interface'
 import PageLayout from 'components/layouts/pageLayout'
 import { getDevtoPosts } from 'lib/fetchPosts'
 
-const Index: NextPage<BlogPostProps> = (props) => {
-  const { posts } = props
+const Index: NextPage<BlogPostProps> = () => {
   return (
     <PageLayout title="Muhammad Mustafa Ali - Full Stack Developer">
-      <Home posts={posts} />
+      <Home />
     </PageLayout>
   )
 }

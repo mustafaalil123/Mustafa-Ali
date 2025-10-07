@@ -1,121 +1,126 @@
 import * as React from 'react';
-import { IconButton, Box, Flex } from '@chakra-ui/react';
+import {
+  IconButton,
+  Box,
+  Flex,
+  HStack,
+  useColorModeValue
+} from '@chakra-ui/react';
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi';
 import { AnimatePresence } from 'framer-motion';
-import { IconType } from 'react-icons/lib/cjs';
 import { MotionImage } from '../shared/animations/motion';
 
+type CarouselProps = {
+  images: string[];
+  showDots?: boolean;
+  initialIndex?: number;
+};
+
 const variants = {
-  enter: (direction: number) => {
-    return {
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0
-    };
-  },
+  enter: (direction: number) => ({
+    x: direction > 0 ? 1000 : -1000,
+    opacity: 0
+  }),
   center: {
     zIndex: 1,
     x: 0,
     opacity: 1
   },
-  exit: (direction: number) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
-      opacity: 0
-    };
-  }
+  exit: (direction: number) => ({
+    zIndex: 0,
+    x: direction < 0 ? 1000 : -1000,
+    opacity: 0
+  })
 };
 
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset: number, velocity: number) => {
-  return Math.abs(offset) * velocity;
-};
+const SWIPE_CONFIDENCE = 10000;
+const swipePower = (offset: number, velocity: number) =>
+  Math.abs(offset) * velocity;
 
-interface BtnProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  icon: any;
-  as: IconType;
-  isRight: boolean;
-  right?: string;
-  left?: string;
-  handleImageDir: (newDirection: number) => void;
-}
-
-const Btn = ({ icon, as, left, right, isRight, handleImageDir }: BtnProps) => {
-  return (
-    <Box
-      top={'calc(50% - 20px)'}
-      right={right}
-      left={left}
-      position={'absolute'}
-      borderRadius={'30px'}
-      width={'40px'}
-      height={'40px'}
-      display={'flex'}
-      justifyContent={'center'}
-      alignItems={'center'}
-      cursor={'pointer'}
-      fontWeight={'bold'}
-      fontSize={'18px'}
-      zIndex={'2'}
-      onClick={() => (isRight ? handleImageDir(1) : handleImageDir(-1))}
-    >
-      <IconButton
-        aria-label="icon button"
-        icon={icon}
-        cursor="pointer"
-        as={as}
-        size="md"
-        colorScheme="teal"
-        borderRadius="full"
-        rounded="full"
-      />
-    </Box>
+const Carousel: React.FC<CarouselProps> = ({
+  images,
+  showDots = true,
+  initialIndex = 0
+}) => {
+  const [direction, setDirection] = React.useState(0);
+  const [index, setIndex] = React.useState(
+    Math.min(Math.max(initialIndex, 0), Math.max(images.length - 1, 0))
   );
-};
+  // we use page only to force re-mount on motion
+  const [page, setPage] = React.useState(0);
 
-export interface CarouselProps {
-  images: string[];
-}
+  const dotBg = useColorModeValue('gray.300', 'gray.600');
+  const activeDotBg = useColorModeValue('gray.700', 'gray.200');
 
-const Carousel: React.SFC<CarouselProps> = ({ images }) => {
-  const [[page, direction], setPage] = React.useState([0, 0]);
-  const [imageIndex, setImageIndex] = React.useState<number>(0);
+  const paginate = React.useCallback(
+    (newDirection: number) => {
+      if (!images.length) return;
+      setDirection(newDirection);
+      setPage((p) => p + newDirection);
+      setIndex((prev) => {
+        const next = prev + newDirection;
+        if (next < 0) return images.length - 1;
+        if (next >= images.length) return 0;
+        return next;
+      });
+    },
+    [images.length]
+  );
 
-  const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
+  const goTo = (toIndex: number) => {
+    if (toIndex === index || !images.length) return;
+    const newDirection = toIndex > index ? 1 : -1;
+    setDirection(newDirection);
+    setPage((p) => p + newDirection);
+    setIndex(() => {
+      if (toIndex < 0) return 0;
+      if (toIndex >= images.length) return images.length - 1;
+      return toIndex;
+    });
   };
 
-  // React.useEffect(() => {
-  //   setImageIndex(repoId);
-  // }, [repoId]);
-
-  const nextImage = (newDirection: number) => {
-    paginate(newDirection);
-    setImageIndex(imageIndex + 1 < images.length ? imageIndex + 1 : 0);
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'ArrowRight') paginate(1);
+    if (e.key === 'ArrowLeft') paginate(-1);
   };
 
-  const prevImage = (newDirection: number) => {
-    paginate(newDirection);
-    setImageIndex(0 === imageIndex ? images.length - 1 : imageIndex - 1);
-  };
+  if (!images || images.length === 0) {
+    return (
+      <Flex
+        w="100%"
+        h="100%"
+        align="center"
+        justify="center"
+        borderRadius="md"
+        bg={useColorModeValue('gray.100', 'gray.700')}
+      >
+        No images
+      </Flex>
+    );
+  }
 
   return (
     <Flex
-      width={'100%'}
-      height={'100%'}
-      position={'relative'}
-      justify-content={'center'}
-      align-items={'center'}
+      w="100%"
+      h="100%"
+      position="relative"
+      justifyContent="center"
+      alignItems="center"
+      tabIndex={0}
+      onKeyDown={onKeyDown}
+      outline="none"
+      borderRadius="md"
     >
       <AnimatePresence initial={false} custom={direction}>
         <MotionImage
+          key={page}
           position="absolute"
           width="100%"
           height="100%"
-          borderRadius="5px"
-          key={page}
-          src={images[imageIndex]}
+          objectFit="cover"
+          borderRadius="md"
+          src={images[index]}
+          alt={`Slide ${index + 1}`}
           custom={direction}
           variants={variants}
           initial="enter"
@@ -128,31 +133,63 @@ const Carousel: React.SFC<CarouselProps> = ({ images }) => {
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}
           dragElastic={1}
-          onDragEnd={(e, { offset, velocity }) => {
+          onDragEnd={(_, { offset, velocity }) => {
             const swipe = swipePower(offset.x, velocity.x);
-
-            if (swipe < -swipeConfidenceThreshold) {
-              paginate(1);
-            } else if (swipe > swipeConfidenceThreshold) {
-              paginate(-1);
-            }
+            if (swipe < -SWIPE_CONFIDENCE) paginate(1);
+            else if (swipe > SWIPE_CONFIDENCE) paginate(-1);
           }}
         />
       </AnimatePresence>
-      <Btn
-        icon={<BiLeftArrowAlt />}
-        as={BiRightArrowAlt}
-        right="25px"
-        isRight={true}
-        handleImageDir={nextImage}
-      />
-      <Btn
-        icon={<BiRightArrowAlt />}
-        as={BiLeftArrowAlt}
-        left="25px"
-        isRight={false}
-        handleImageDir={prevImage}
-      />
+
+      {/* Right button */}
+      <Box position="absolute" right="12px" top="50%" transform="translateY(-50%)" zIndex={2}>
+        <IconButton
+          aria-label="Next image"
+          icon={<BiRightArrowAlt />}
+          onClick={() => paginate(1)}
+          size="md"
+          colorScheme="teal"
+          borderRadius="full"
+        />
+      </Box>
+
+      {/* Left button */}
+      <Box position="absolute" left="12px" top="50%" transform="translateY(-50%)" zIndex={2}>
+        <IconButton
+          aria-label="Previous image"
+          icon={<BiLeftArrowAlt />}
+          onClick={() => paginate(-1)}
+          size="md"
+          colorScheme="teal"
+          borderRadius="full"
+        />
+      </Box>
+
+      {/* Dots */}
+      {showDots && images.length > 1 && (
+        <HStack
+          position="absolute"
+          bottom="10px"
+          spacing={2}
+          zIndex={2}
+          px={3}
+          py={1}
+          borderRadius="full"
+          bg={useColorModeValue('blackAlpha.300', 'whiteAlpha.300')}
+        >
+          {images.map((_, i) => (
+            <Box
+              key={i}
+              w="8px"
+              h="8px"
+              borderRadius="full"
+              bg={i === index ? activeDotBg : dotBg}
+              cursor="pointer"
+              onClick={() => goTo(i)}
+            />
+          ))}
+        </HStack>
+      )}
     </Flex>
   );
 };
