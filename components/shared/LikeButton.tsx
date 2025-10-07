@@ -2,7 +2,7 @@ import { usePostData } from 'lib/usePostData';
 import React from 'react';
 import { MotionBox, MotionFlex } from './animations/motion';
 import { Icon, useColorModeValue, Spinner } from '@chakra-ui/react';
-import { Box, HStack } from '@chakra-ui/layout';
+import { Box, HStack } from '@chakra-ui/react';
 import { BsHeartFill } from 'react-icons/bs';
 
 const emojis = ['👍', '🙏', '🥰'];
