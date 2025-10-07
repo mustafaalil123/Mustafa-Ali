@@ -43,7 +43,7 @@ export const companies = [
     alt: 'PS image',
     role: 'Software Engineer (Part Time)',
     skills: ['golang', 'node', 'aws', 'nginx', 'next', 'react', 'typescript', 'javascript' ],
-    period: 'Mar 2023 - Sep 2023',
+    period: 'jan 2023 - Aug 2023',
     logo: '/assets/images/logos/weteck.png',
     points:[
     'Revamped a traditional Node.js application into a robust system using Gomicro services architecture and Next.js, enhancing scalability by 40%',
@@ -69,7 +69,7 @@ export const companies = [
     alt: 'BT image',
     role: 'Game Developer Intern',
     skills: ['unity3D', 'hyper casual games', 'story making', 'designing'],
-    period: 'Aug 2021 - Sep 2021',
+    period: 'jul 2021 - Sep 2021',
     logo: '/assets/images/logos/mindstorm.jpeg',
     points:[
       'Developed a Hyper Casual Game using Unity3D,focusing on storywriting,enhancing game play cohesion, and character creation.',

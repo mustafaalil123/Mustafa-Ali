@@ -1,4 +1,5 @@
 import { Flex, Link, Text, Icon, Box } from "@chakra-ui/react";
+import { JSX } from "react";
 import { FaDev } from "react-icons/fa";
 
 interface IProps {

@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import { SEO_IMAGE } from 'data/constants';
+import { JSX } from 'react';
 
 type Props = {
   title: string;

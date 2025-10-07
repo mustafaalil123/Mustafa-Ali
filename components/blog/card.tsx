@@ -8,158 +8,152 @@ import {
   useColorModeValue,
   Flex,
   Image,
-} from '@chakra-ui/react'
-import NextLink from 'next/link'
-import { CardTransition } from '../shared/animations/page-transitions'
-import { BlogPost } from '../../interfaces/interface'
-import moment from 'moment'
-import { useLinkColor } from 'components/theme'
-import { Tags } from 'components/shared/Tags'
-import { HeartIcon, CommentIcon } from 'components/shared/icons'
-import DisplayText from 'components/shared/icons/DisplayText'
+  Box,
+  Skeleton,
+  Wrap,
+  WrapItem,
+} from '@chakra-ui/react';
+import NextLink from 'next/link';
+import { CardTransition } from '../shared/animations/page-transitions';
+import { BlogPost } from '../../interfaces/interface';
+import moment from 'moment';
+import { useLinkColor } from 'components/theme';
+import { Tags } from 'components/shared/Tags';
+import { HeartIcon, CommentIcon } from 'components/shared/icons';
+import DisplayText from 'components/shared/icons/DisplayText';
 
 interface IProps {
-  post: BlogPost
-  isLoading: boolean
-  postDbLikes: number
+  post: BlogPost;
+  isLoading: boolean;
+  postDbLikes: number;
 }
 
-const PostCard: React.SFC<IProps> = ({ post, isLoading, postDbLikes }) => {
-  const linkColor = useLinkColor()
-  const textColor = useColorModeValue('gray.500', 'gray.200')
+const PostCard: React.FC<IProps> = ({ post, isLoading, postDbLikes }) => {
+  const linkColor = useLinkColor();
+  const textColor = useColorModeValue('gray.600', 'gray.200');
+  const cardBg = useColorModeValue('white', 'gray.800');
+  const borderCol = useColorModeValue('gray.200', 'gray.700');
   const devIcon = useColorModeValue(
     '/assets/images/logos/dev.png',
     '/assets/images/logos/dev_white.png'
-  )
+  );
+
+  const totalReactions = (Number(post.public_reactions_count) || 0) + (postDbLikes || 0);
+  const hasReactions = totalReactions > 0;
+  const hasComments = !!post.comments_count;
 
   return (
     <CardTransition>
       <VStack
-        spacing={1}
+        spacing={3}
         p={4}
-        _hover={{ shadow: 'md', textDecoration: 'none' }}
+        align="stretch"
         borderWidth="1px"
-        position="relative"
+        borderColor={borderCol}
         rounded="md"
-        bg={useColorModeValue('white', 'gray.800')}
-        align="left"
+        bg={cardBg}
+        position="relative"
+        _hover={{ shadow: 'md', textDecoration: 'none' }}
       >
-        {post.url ? (
+        {post.url && (
           <Tooltip hasArrow label="Dev.to" placement="top">
             <Image
               src={devIcon}
+              alt="Dev.to"
               width="2rem"
               height="2rem"
               position="absolute"
-              color="#cbd5e0"
               right="0.5rem"
               top="-14px"
+              loading="lazy"
             />
           </Tooltip>
-        ) : (
-          ''
         )}
 
-        <HStack justifyContent="space-between" isInline>
-          <Heading fontSize="lg" textAlign="left" mt={0}>
-            <NextLink href={`/blog/${post.slug}`} passHref>
-              <Text as={Link} color={linkColor}>
+        <HStack justify="space-between" align="flex-start">
+          <Heading as="h3" fontSize="lg" mt={0} noOfLines={2}>
+            <NextLink href={`/blog/${post.slug}`} passHref legacyBehavior>
+              <Link aria-label={`Open blog post: ${post.title}`} color={linkColor}>
                 {post.title}
-              </Text>
+              </Link>
             </NextLink>
           </Heading>
-          <HStack spacing={2} isInline display={['none', 'flex', 'flex']}>
-            {post.public_reactions_count || postDbLikes ? (
-              <Flex alignItems="center">
-                <DisplayText
-                  isLoading={isLoading}
-                  value={
-                    (Number(post.public_reactions_count) || 0) + postDbLikes
-                  }
-                />
-                &nbsp;
+
+          <HStack spacing={3} display={['none', 'flex']}>
+            {hasReactions && (
+              <Flex align="center" gap={1}>
+                <DisplayText isLoading={isLoading} value={totalReactions} />
                 <HeartIcon />
               </Flex>
-            ) : (
-              ''
             )}
-            {post.comments_count ? (
-              <Flex alignItems="center">
-                <DisplayText isLoading={false} value={post.comments_count} />
-                &nbsp;
+            {hasComments && (
+              <Flex align="center" gap={1}>
+                <DisplayText isLoading={false} value={post.comments_count!} />
                 <CommentIcon />
               </Flex>
-            ) : (
-              ''
             )}
           </HStack>
         </HStack>
-        <HStack
-          spacing={2}
-          isInline
-          justifyContent={['space-between', 'flex-start']}
-        >
+
+        <HStack spacing={3} wrap="wrap">
           <Tooltip hasArrow label="Published" placement="top">
             <Text fontSize="sm" fontWeight="600" color={textColor}>
               {moment(post.published_at).format('Do MMMM YYYY')}
             </Text>
           </Tooltip>
-          <HStack spacing={2}>
-            {post.public_reactions_count || postDbLikes ? (
+
+          <HStack spacing={3} display={['flex', 'none']}>
+            {hasReactions && (
               <Tooltip hasArrow label="Reactions" placement="top">
-                <Flex alignItems="center" display={['flex', 'none', 'none']}>
-                  <DisplayText
-                    isLoading={isLoading}
-                    value={
-                      (Number(post.public_reactions_count) || 0) + postDbLikes
-                    }
-                  />
-                  &nbsp;
+                <Flex align="center" gap={1}>
+                  <DisplayText isLoading={isLoading} value={totalReactions} />
                   <HeartIcon />
                 </Flex>
               </Tooltip>
-            ) : (
-              ''
             )}
-            {post.comments_count ? (
+            {hasComments && (
               <Tooltip hasArrow label="Comments" placement="top">
-                <Flex alignItems="center" display={['flex', 'none', 'none']}>
-                  <DisplayText isLoading={false} value={post.comments_count} />
-                  &nbsp;
+                <Flex align="center" gap={1}>
+                  <DisplayText isLoading={false} value={post.comments_count!} />
                   <CommentIcon />
                 </Flex>
               </Tooltip>
-            ) : (
-              ''
             )}
           </HStack>
-          <HStack spacing={1} alignItems="center" display={['none', 'none', 'flex']}>
-            <Tags
-              tags={post.tag_list}
-              interactive={false}
-              tagProps={{
-                padding: '0 3px',
-                size: 'sm',
-              }}
-            />
-          </HStack>
         </HStack>
-        <HStack spacing={1} alignItems="center" display={['flex', 'flex', 'none']}>
+
+        {/* Tags (desktop) */}
+        <Box display={['none', null, 'block']}>
           <Tags
             tags={post.tag_list}
             interactive={false}
-            tagProps={{
-              padding: '0 3px',
-              size: 'sm',
-            }}
+            tagProps={{ padding: '0 6px', size: 'sm' }}
           />
-        </HStack>
-        <Text align="left" fontSize="md" noOfLines={1} color={textColor}>
-          {post.description}
-        </Text>
+        </Box>
+
+        {/* Tags (mobile/tablet) */}
+        <Box display={['block', null, 'none']}>
+          <Wrap shouldWrapChildren spacing={1}>
+            {post.tag_list?.map((t) => (
+              <WrapItem key={t}>
+                <Tags
+                  tags={[t]}
+                  interactive={false}
+                  tagProps={{ padding: '0 6px', size: 'sm' }}
+                />
+              </WrapItem>
+            ))}
+          </Wrap>
+        </Box>
+
+        <Skeleton isLoaded={!isLoading}>
+          <Text align="left" fontSize="md" noOfLines={2} color={textColor}>
+            {post.description}
+          </Text>
+        </Skeleton>
       </VStack>
     </CardTransition>
-  )
-}
+  );
+};
 
-export default PostCard
+export default PostCard;

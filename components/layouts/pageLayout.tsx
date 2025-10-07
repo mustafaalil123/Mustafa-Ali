@@ -1,4 +1,4 @@
-import React, { Fragment, ReactNode } from 'react'
+import React, { Fragment, JSX, ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import Meta from '../shared/meta'
 

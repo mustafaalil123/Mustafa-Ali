@@ -1,9 +1,12 @@
 import * as React from 'react';
-import { HStack, VStack, Text, useColorModeValue, Link } from '@chakra-ui/react';
+import { HStack, VStack, Text, useColorModeValue, Link, Box } from '@chakra-ui/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import LazyImage from 'components/shared/lazy-image';
 import { useLinkColor } from 'components/theme';
 import { Tag } from 'components/shared/Tags';
+
+// 👉 make a motion-enabled Chakra Box
+const MotionBox = motion(Box);
 
 interface ProjectCardProps {
   title: string;
@@ -25,10 +28,10 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
   const linkColor = useLinkColor();
   const textColor = useColorModeValue('gray.500', 'gray.200');
   const [isOpen, setIsOpen] = React.useState(false);
-  const toggleOpen = () => setIsOpen(!isOpen);
+  const toggleOpen = () => setIsOpen((v) => !v);
 
   return (
-    <motion.div layout onClick={toggleOpen}>
+    <MotionBox layout onClick={toggleOpen}>
       <HStack
         p={4}
         bg={useColorModeValue('white', 'gray.800')}
@@ -43,19 +46,19 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
         cursor="pointer"
         _hover={{ shadow: 'lg' }}
       >
-        <LazyImage
-          src={logo}
-          blurHash={blurHash}
-          size="sm"
-          width={33}
-          height={33}
-          layout="fixed"
-          rounded="md"
-        />
-        <VStack align="start" justify="flex-start">
-          <VStack spacing={0} align="start">
-            <motion.div layout>
-              <HStack>
+       <LazyImage
+  src={logo}
+  blurHash={blurHash}
+  width={33}
+  height={33}
+  rounded="md"
+/>
+
+
+        <VStack align="start" justify="flex-start" w="full">
+          <VStack spacing={0} align="start" w="full">
+            <MotionBox layout w="full">
+              <HStack w="full" spacing={2} align="start">
                 <Text
                   as={Link}
                   href={link}
@@ -68,51 +71,47 @@ const ProjectCard: React.FC<ProjectCardProps> = ({
                 >
                   {title}
                 </Text>
-                <HStack spacing="1">
+                <HStack spacing="1" flexWrap="wrap">
                   {technologies.map((tech, index) => (
-                    <Tag key={index} name={tech} mt="1px" interactive={false} mr="auto" />
+                    <Tag key={index} name={tech} mt="1px" interactive={false} />
                   ))}
                 </HStack>
               </HStack>
-            </motion.div>
-            <AnimatePresence>
-              <motion.div
-                layout
-                initial={{ opacity: 1 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 1 }}
-              >
-                {!isOpen && (
+            </MotionBox>
+
+            <AnimatePresence initial={false} mode="wait">
+              {!isOpen ? (
+                <MotionBox
+                  key="collapsed"
+                  layout
+                  initial={{ opacity: 1 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  w="full"
+                >
                   <Text fontSize="sm" color={textColor} noOfLines={{ base: 2 }}>
                     {description}
                   </Text>
-                )}
-              </motion.div>
-            </AnimatePresence>
-
-            <AnimatePresence>
-              <motion.div
-                layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                variants={{ exit: { transition: { staggerChildren: 0.1 } } }}
-              >
-                {isOpen && (
-                  <Text
-                    fontSize="sm"
-                    color={textColor}
-                    // noOfLines={{ base: isOpen ? 5 : 2 }}
-                  >
+                </MotionBox>
+              ) : (
+                <MotionBox
+                  key="expanded"
+                  layout
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  w="full"
+                >
+                  <Text fontSize="sm" color={textColor}>
                     {description}
                   </Text>
-                )}
-              </motion.div>
+                </MotionBox>
+              )}
             </AnimatePresence>
           </VStack>
         </VStack>
       </HStack>
-    </motion.div>
+    </MotionBox>
   );
 };
 
