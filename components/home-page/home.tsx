@@ -3,21 +3,52 @@ import { useLinkColor } from 'components/theme';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
+// ===== Hydration-safe deterministic PRNG helpers =====
+function makePRNG(seed = 123456789) {
+  let s = seed >>> 0;
+  return () => {
+    s = (1664525 * s + 1013904223) >>> 0;
+    return (s & 0xffffffff) / 0x100000000;
+  };
+}
+
+type Dot = { topPct: number; leftPct: number; duration: number; delay: number };
+
+function useStableDots(count = 50, seed = 20241008) {
+  // Use state initializer so the array is created exactly once per mount,
+  // and deterministically on both SSR and CSR.
+  return useState<Dot[]>(() => {
+    const rnd = makePRNG(seed);
+    const arr: Dot[] = [];
+    for (let i = 0; i < count; i++) {
+      arr.push({
+        topPct: rnd() * 100,
+        leftPct: rnd() * 100,
+        duration: 2 + rnd() * 3, // 2..5s
+        delay: rnd() * 3,        // 0..3s
+      });
+    }
+    return arr;
+  })[0];
+}
+// =====================================================
+
 const emojis = ['👋', '✨', '🚀', '💫'];
 
 const Home = () => {
   const [showEmoji, setShowEmoji] = useState(false);
   const [emojiCounter, setEmojiCounter] = useState(-1);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [hoveredCard, setHoveredCard] = useState(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [hoveredHeading, setHoveredHeading] = useState(false);
   const [hoveredAvatar, setHoveredAvatar] = useState(false);
-  const router= useRouter()
+  const router = useRouter();
 
   // Color mode values
   const textColor = useColorModeValue('#2D3748', '#FFFFFF');
   const cardTextColor = useColorModeValue('#000', '#FFFFFF');
 
+  // Keep emoji index in range if you keep clicking
   useEffect(() => {
     const interval = setInterval(() => {
       if (emojiCounter >= 3) setEmojiCounter(0);
@@ -25,8 +56,9 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [emojiCounter]);
 
+  // Mouse-follow blobs (only attaches on client)
   useEffect(() => {
-    const handleMouseMove = (e) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: (e.clientX - window.innerWidth / 2) / 50,
         y: (e.clientY - window.innerHeight / 2) / 50,
@@ -36,11 +68,14 @@ const Home = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  const skills = [
+    'MERN', 'TypeScript', 'Python', 'AWS', 'Tailwind', 'Material UI', 'My SQL', 'Docker', 'Redis'
+  ];
 
-  const skills=[
-    'MERN','TypeScript', 'Python', 'AWS','Tailwind', 'Material UI', 'My SQL', 'Docker', 'Redis'];
+  const linkColor = useLinkColor();
 
-  const linkColor = useLinkColor()
+  // NEW: deterministic dots (no Math.random() in render)
+  const dots = useStableDots(50, 987654321);
 
   return (
     <div style={{
@@ -48,7 +83,7 @@ const Home = () => {
       position: 'relative',
       overflow: 'hidden'
     }}>
-      
+      {/* Decorative background */}
       <div style={{
         position: 'absolute',
         inset: 0,
@@ -80,7 +115,7 @@ const Home = () => {
           transition: 'transform 0.3s ease-out'
         }} />
         <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
-          {[...Array(50)].map((_, i) => (
+          {dots.map((d, i) => (
             <div
               key={i}
               style={{
@@ -89,10 +124,10 @@ const Home = () => {
                 height: '4px',
                 background: 'rgba(255, 255, 255, 0.2)',
                 borderRadius: '50%',
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animation: `pulse ${2 + Math.random() * 3}s ease-in-out infinite`,
-                animationDelay: `${Math.random() * 3}s`
+                top: `${d.topPct}%`,
+                left: `${d.leftPct}%`,
+                animation: `pulse ${d.duration}s ease-in-out infinite`,
+                animationDelay: `${d.delay}s`
               }}
             />
           ))}
@@ -123,8 +158,6 @@ const Home = () => {
             flexWrap: 'wrap',
             justifyContent: 'center'
           }}>
-           
-
             {/* Greeting and Name */}
             <div style={{ textAlign: 'left' }}>
               <div style={{ position: 'relative', marginBottom: '16px' }}>
@@ -201,16 +234,16 @@ const Home = () => {
               }}>
                 I am{' '}
                 <chakra.span
-                 color={linkColor}
-                 style={{
-                  fontWeight: 'bold',
-                }}>
+                  color={linkColor}
+                  style={{ fontWeight: 'bold' }}
+                >
                   M Mustafa Ali
                 </chakra.span>
               </h2>
             </div>
-             {/* Avatar */}
-            <div 
+
+            {/* Avatar */}
+            <div
               style={{ position: 'relative' }}
               onMouseEnter={() => setHoveredAvatar(true)}
               onMouseLeave={() => setHoveredAvatar(false)}
@@ -239,11 +272,7 @@ const Home = () => {
                   <img
                     src="https://avatars2.githubusercontent.com/u/37842853?v=4"
                     alt="M Mustafa Ali"
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover'
-                    }}
+                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                   />
                 </div>
                 {/* Floating icons */}
@@ -286,11 +315,7 @@ const Home = () => {
           </div>
 
           {/* Center Content Section */}
-          <div style={{
-            maxWidth: '800px',
-            margin: '0 auto',
-            textAlign: 'center'
-          }}>
+          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
             <div style={{
               display: 'flex',
               flexDirection: 'column',
@@ -315,12 +340,12 @@ const Home = () => {
                 onMouseEnter={() => setHoveredCard(1)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                A <chakra.span color={linkColor} style={{ color: '', fontWeight: 600 }}>Full Stack Engineer</chakra.span> with 
-                a passion for developing efficient, user-centric web solutions. Throughout my career, 
-                I've consistently demonstrated a strong ability to take initiative and lead diverse 
+                A <chakra.span color={linkColor} style={{ fontWeight: 600 }}>Full Stack Engineer</chakra.span> with
+                a passion for developing efficient, user-centric web solutions. Throughout my career,
+                I've consistently demonstrated a strong ability to take initiative and lead diverse
                 teams towards successful project outcomes.
               </p>
-              
+
               <p
                 style={{
                   backdropFilter: 'blur(12px)',
@@ -335,9 +360,9 @@ const Home = () => {
                 onMouseEnter={() => setHoveredCard(2)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                I excel in collaborative environments but also enjoy independently diving deep into 
+                I excel in collaborative environments but also enjoy independently diving deep into
                 complex problems. My approach combines <span style={{ color: '#c084fc', fontWeight: 600 }}>analytical thinking</span> with{' '}
-                <span style={{ color: '#60a5fa', fontWeight: 600 }}>creativity</span>, allowing me to tackle 
+                <span style={{ color: '#60a5fa', fontWeight: 600 }}>creativity</span>, allowing me to tackle
                 issues from multiple angles.
               </p>
             </div>
@@ -351,10 +376,9 @@ const Home = () => {
               justifyContent: 'center'
             }}>
               <Button
-              bg={linkColor}
-              onClick={() => router.push('/projects')}
-       
-  _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
+                bg={linkColor}
+                onClick={() => router.push('/projects')}
+                _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
                 style={{
                   padding: '16px 32px',
                   borderRadius: '9999px',
@@ -365,20 +389,16 @@ const Home = () => {
                   gap: '8px',
                   border: 'none',
                   cursor: 'pointer',
-                  color:"white",
+                  color: "white",
                 }}
-
-
               >
                 <span>View Projects</span>
-                <span style={{
-                  fontSize: '20px',
-                }}>⚡</span>
+                <span style={{ fontSize: '20px' }}>⚡</span>
               </Button>
-             <Button
-              bg={linkColor}
-       
-  _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
+
+              <Button
+                bg={linkColor}
+                _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
                 style={{
                   padding: '16px 32px',
                   borderRadius: '9999px',
@@ -389,13 +409,16 @@ const Home = () => {
                   gap: '8px',
                   border: 'none',
                   cursor: 'pointer',
-                  color:"white"
+                  color: "white"
                 }}
               >
-                <a style={{color:"white"}}
-                 href="/assets/cv/Mustafa_Ali_SE.pdf" 
-  download="Mustafa_Ali_SE.pdf"
-                >Download Resume</a>
+                <a
+                  style={{ color: "white" }}
+                  href="/assets/cv/Mustafa_Ali_SE.pdf"
+                  download="Mustafa_Ali_SE.pdf"
+                >
+                  Download Resume
+                </a>
               </Button>
             </div>
 
@@ -403,13 +426,12 @@ const Home = () => {
               display: 'flex',
               flexWrap: 'wrap',
               gap: '12px',
-              
               justifyContent: 'center'
             }}>
               {skills.map((tech) => (
                 <Button
-  _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
                   key={tech}
+                  _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
                   bg={linkColor}
                   style={{
                     padding: '8px 16px',
@@ -426,20 +448,19 @@ const Home = () => {
                 </Button>
               ))}
 
- <Button
- onClick={() => router.push('/tech-stack')}
-                    variant="link"
-                    color={linkColor}
-                    size="sm"
-                    mt={2}
-                    alignSelf={{ base: 'center', sm: 'flex-start' }}
-                    px={0}
-                    fontSize={{ base: 'xs', sm: 'sm' }}
-                  >
-                    see more
-                  </Button>  
-          </div>
-          
+              <Button
+                onClick={() => router.push('/tech-stack')}
+                variant="link"
+                color={linkColor}
+                size="sm"
+                mt={2}
+                alignSelf={{ base: 'center', sm: 'flex-start' }}
+                px={0}
+                fontSize={{ base: 'xs', sm: 'sm' }}
+              >
+                see more
+              </Button>
+            </div>
           </div>
         </div>
 
@@ -452,7 +473,6 @@ const Home = () => {
         }}>
         </div>
       </div>
-
 
       <style>{`
         @keyframes gradient {
@@ -473,7 +493,6 @@ const Home = () => {
         }
       `}</style>
     </div>
-    
   );
 };
 
