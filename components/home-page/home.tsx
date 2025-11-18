@@ -16,7 +16,6 @@ import {
   FiStar,
   FiChevronLeft,
   FiChevronRight,
-  FiMessageCircle,
 } from 'react-icons/fi';
 
 // Hydration safe deterministic PRNG helpers
