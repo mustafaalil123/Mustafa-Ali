@@ -35,10 +35,10 @@ export const projectsList = [
 
   caseStudy: {
     images: [
-      '/assets/images/ProjectsImage/EcomCircle/1.PNG',
-      '/assets/images/ProjectsImage/EcomCircle/2.PNG',
-      '/assets/images/ProjectsImage/EcomCircle/3.PNG',
-      '/assets/images/ProjectsImage/EcomCircle/4.PNG'
+      '/assets/images/ProjectsImage/EcomCircle/1.png',
+      '/assets/images/ProjectsImage/EcomCircle/2.png',
+      '/assets/images/ProjectsImage/EcomCircle/3.png',
+      '/assets/images/ProjectsImage/EcomCircle/4.png'
     ],
 
   longDescription: [
@@ -68,14 +68,14 @@ export const projectsList = [
     techStack: ['Vue 3', 'VueX', 'Javascript'],
         caseStudy: {
       images: [
-        '/assets/images/ProjectsImage/StoreFilter/1.PNG',
-        '/assets/images/ProjectsImage/StoreFilter/2.PNG',
-        '/assets/images/ProjectsImage/StoreFilter/3.PNG',
-        '/assets/images/ProjectsImage/StoreFilter/4.PNG',
-         '/assets/images/ProjectsImage/StoreFilter/5.PNG',
-        '/assets/images/ProjectsImage/StoreFilter/6.PNG',
-        '/assets/images/ProjectsImage/StoreFilter/7.PNG',
-        '/assets/images/ProjectsImage/StoreFilter/8.PNG',
+        '/assets/images/ProjectsImage/StoreFilter/1.png',
+        '/assets/images/ProjectsImage/StoreFilter/2.png',
+        '/assets/images/ProjectsImage/StoreFilter/3.png',
+        '/assets/images/ProjectsImage/StoreFilter/4.png',
+         '/assets/images/ProjectsImage/StoreFilter/5.png',
+        '/assets/images/ProjectsImage/StoreFilter/6.png',
+        '/assets/images/ProjectsImage/StoreFilter/7.png',
+        '/assets/images/ProjectsImage/StoreFilter/8.png',
       ],
       longDescription:[
         'The challenge was to create a tool that could provide detailed insights into social media activity, search trends, keywords, ads, PR posts, and blogs, helping businesses grow by understanding their competition.',
@@ -95,13 +95,13 @@ export const projectsList = [
     techStack: ['Node', 'Next', 'MUI', 'Typescript', 'Blockchain'],
     caseStudy: {
       images: [
-        '/assets/images/ProjectsImage/SecureWatch/1.PNG',
-        '/assets/images/ProjectsImage/SecureWatch/2.PNG',
-        '/assets/images/ProjectsImage/SecureWatch/3.PNG',
-        '/assets/images/ProjectsImage/SecureWatch/4.PNG',
-         '/assets/images/ProjectsImage/SecureWatch/5.PNG',
-        '/assets/images/ProjectsImage/SecureWatch/6.PNG',
-        '/assets/images/ProjectsImage/SecureWatch/7.PNG',
+        '/assets/images/ProjectsImage/SecureWatch/1.png',
+        '/assets/images/ProjectsImage/SecureWatch/2.png',
+        '/assets/images/ProjectsImage/SecureWatch/3.png',
+        '/assets/images/ProjectsImage/SecureWatch/4.png',
+         '/assets/images/ProjectsImage/SecureWatch/5.png',
+        '/assets/images/ProjectsImage/SecureWatch/6.png',
+        '/assets/images/ProjectsImage/SecureWatch/7.png',
       ],
       longDescription:[
         'A client in the luxury watch market needed an e-commerce platform to sell watches and provide secure historical reports.',
@@ -123,11 +123,11 @@ export const projectsList = [
     techStack: ['Next', 'Javascript', 'Redux Toolkit'],
     caseStudy: {
       images: [
-        '/assets/images/ProjectsImage/MJM/1.PNG',
-        '/assets/images/ProjectsImage/MJM/2.PNG',
-        '/assets/images/ProjectsImage/MJM/3.PNG',
-        '/assets/images/ProjectsImage/MJM/4.PNG',
-         '/assets/images/ProjectsImage/MJM/5.PNG',
+        '/assets/images/ProjectsImage/MJM/1.png',
+        '/assets/images/ProjectsImage/MJM/2.png',
+        '/assets/images/ProjectsImage/MJM/3.png',
+        '/assets/images/ProjectsImage/MJM/4.png',
+         '/assets/images/ProjectsImage/MJM/5.png',
       ],
       longDescription:
       ['The challenge was to create a single dashboard that consolidated listings, orders, sales, and refunds for global Amazon marketplaces, with automated data management and error handling We developed a website that unified all activities into one dashboard, automating data pushes and creating alerts and Asana tasks for VAs if errors occurred.',
@@ -145,10 +145,10 @@ export const projectsList = [
     techStack: ['React', 'MUI', 'Typescript'],
     caseStudy: {
       images: [
-        '/assets/images/ProjectsImage/CarAuct/1.PNG',
-        '/assets/images/ProjectsImage/CarAuct/2.PNG',
-        '/assets/images/ProjectsImage/CarAuct/3.PNG',
-        '/assets/images/ProjectsImage/CarAuct/4.PNG',
+        '/assets/images/ProjectsImage/CarAuct/1.png',
+        '/assets/images/ProjectsImage/CarAuct/2.png',
+        '/assets/images/ProjectsImage/CarAuct/3.png',
+        '/assets/images/ProjectsImage/CarAuct/4.png',
       ],
       longDescription:[
 'UK Car Auctions required a responsive platform to serve sellers and buyers effectively.',
