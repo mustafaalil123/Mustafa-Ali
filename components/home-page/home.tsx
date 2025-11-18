@@ -760,12 +760,6 @@ const inactiveDotColor = useColorModeValue(
                     </Box>
                   </Flex>
 
-                  <FiMessageCircle
-                    size={40}
-                    color="#a855f7"
-                    style={{ opacity: 0.6, marginBottom: 8 }}
-                  />
-
                   <Box
                     display="flex"
                     flexDirection="column"
