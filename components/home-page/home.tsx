@@ -57,12 +57,19 @@ const Home = () => {
   const [hoveredAvatar, setHoveredAvatar] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [isQuoteExpanded, setIsQuoteExpanded] = useState(false);
 
   const router = useRouter();
 
   const textColor = useColorModeValue('#2D3748', '#FFFFFF');
   const cardTextColor = useColorModeValue('#000000', '#FFFFFF');
   const linkColor = useLinkColor();
+  const activeDotColor = useColorModeValue('#a855f7', '#a855f7'); 
+const inactiveDotColor = useColorModeValue(
+  'rgba(55,65,81,0.7)',      
+  'rgba(107,114,128,0.7)'    
+);
+
   const dots = useStableDots(50, 987654321);
 
   // autoplay
@@ -73,6 +80,11 @@ const Home = () => {
     }, 6000);
     return () => clearInterval(timer);
   }, [isAutoPlay]);
+
+  // reset quote expansion when testimonial changes
+  useEffect(() => {
+    setIsQuoteExpanded(false);
+  }, [activeIndex]);
 
   // emoji animation
   useEffect(() => {
@@ -100,15 +112,25 @@ const Home = () => {
 
   const activeTestimonial = testimonials[activeIndex];
 
+  const MAX_TESTIMONIAL_CHARS = 260;
+  const quoteId = 'active-testimonial-quote';
+  const fullQuote = activeTestimonial.quote;
+  const isLongQuote = fullQuote.length > MAX_TESTIMONIAL_CHARS;
+  const displayedQuote =
+    isQuoteExpanded || !isLongQuote
+      ? fullQuote
+      : fullQuote.slice(0, MAX_TESTIMONIAL_CHARS) + '...';
+
   const dotStyle = (index: number): CSSProperties => ({
-    width: index === activeIndex ? 24 : 8,
-    height: 8,
-    borderRadius: 999,
-    background: index === activeIndex ? '#a855f7' : 'rgba(255,255,255,0.3)',
-    opacity: index === activeIndex ? 1 : 0.5,
-    transition: 'all 0.25s',
-    cursor: 'pointer',
-  });
+  width: index === activeIndex ? 24 : 8,
+  height: 8,
+  borderRadius: 999,
+  background: index === activeIndex ? activeDotColor : inactiveDotColor,
+  opacity: 1,
+  transition: 'all 0.25s',
+  cursor: 'pointer',
+});
+
 
   return (
     <div
@@ -607,7 +629,7 @@ const Home = () => {
               </Box>
             </Box>
 
-            {/* Testimonial section with same style bg */}
+            {/* Testimonial section */}
             <Box
               w="100%"
               py="40px"
@@ -618,38 +640,57 @@ const Home = () => {
               boxShadow="0 25px 50px -12px rgba(0,0,0,0.6)"
             >
               <Box textAlign="center" mb="32px">
-                <Text
-                  as="span"
-                  display="inline-flex"
-                  alignItems="center"
-                  gap="8px"
-                  px="16px"
-                  py="8px"
-                  borderRadius="999px"
-                  bg="rgba(129,140,248,0.15)"
-                  border="1px solid rgba(129,140,248,0.4)"
-                  mb="16px"
-                >
-                  <FiStar size={16} color="#c4b5fd" />
-                  <Text
-                    as="span"
-                    fontSize="sm"
-                    color="#e5e7eb"
-                    fontWeight={500}
-                  >
-                    Client Testimonials
-                  </Text>
-                </Text>
+               <Text
+  as="span"
+  display="inline-flex"
+  alignItems="center"
+  gap="8px"
+  px="16px"
+  py="8px"
+  borderRadius="999px"
+  bg={useColorModeValue(
+    'rgba(129,140,248,0.12)',   // light mode
+    'rgba(168,85,247,0.15)'     // dark mode
+  )}
+  border="1px solid"
+  borderColor={useColorModeValue(
+    'rgba(129,140,248,0.4)',    // light mode
+    'rgba(168,85,247,0.4)'      // dark mode
+  )}
+  mb="16px"
+>
+  <FiStar
+    size={16}
+    color={useColorModeValue(
+      '#6366f1',  // light mode icon color
+      '#c4b5fd'   // dark mode icon color
+    )}
+  />
+
+  <Text
+    as="span"
+    fontSize="sm"
+    color={useColorModeValue(
+      '#111827',  // text becomes dark in light mode
+      '#e5e7eb'   // text becomes light in dark mode
+    )}
+    fontWeight={500}
+  >
+    Client Testimonials
+  </Text>
+</Text>
+
 
                 <Heading
                   as="h3"
                   fontSize={{ base: '2xl', md: '3xl' }}
-                  color={useColorModeValue('#111827', 'white')}
+                  color={
+                    linkColor}
                   mb="8px"
                 >
                   What People Say About{' '}
                   <chakra.span
-                    color={useColorModeValue('#111827', 'white')}
+                    color={linkColor}
                   >
                     Working With Me
                   </chakra.span>
@@ -672,7 +713,7 @@ const Home = () => {
                   borderRadius="16px"
                   border="1px solid rgba(255,255,255,0.18)"
                   p={{ base: '24px', md: '40px' }}
-                  bg="rgba(15,23,42,0.9)"
+                  bg={linkColor}
                   boxShadow="0 25px 50px -12px rgba(0,0,0,0.8)"
                 >
                   <Flex align="center" gap="12px" flex="1" minW={0} mb="16px">
@@ -725,18 +766,36 @@ const Home = () => {
                     style={{ opacity: 0.6, marginBottom: 8 }}
                   />
 
-                  <Text
-                    color="rgba(249,250,251,1)"
-                    fontSize={{ base: 'lg', md: 'xl' }}
-                    mb="24px"
-                    lineHeight="1.8"
-                    textAlign="left"
+                  <Box
+                    display="flex"
+                    flexDirection="column"
+                    minHeight="150px"
                   >
-                    {activeTestimonial.quote}
-                  </Text>
+                    <Text
+                      id={quoteId}
+                      color="rgba(249,250,251,1)"
+                      fontSize={15}
+                      lineHeight="1.8"
+                      textAlign="left"
+                      flex="0 0 auto"
+                    >
+                      {displayedQuote}
+                    </Text>
+
+                 <chakra.button
+  onClick={() => setIsQuoteExpanded(v => !v)}
+  color={useColorModeValue('#fdfdfdff', '#ffffff')}
+  fontSize="sm"
+  fontWeight="semibold"
+  _hover={{ textDecoration: 'underline' }}
+  aria-expanded={isQuoteExpanded}
+>
+  {isQuoteExpanded ? 'See less' : 'See more'}
+</chakra.button>
+
+                  </Box>
                 </Box>
 
-                {/* Controls */}
                 <Flex justify="center" align="center" gap="24px" mt="24px">
                   <Button
                     onClick={() =>
