@@ -1,9 +1,25 @@
-import { Button, chakra, useColorModeValue } from '@chakra-ui/react';
+import React, { useEffect, useState, CSSProperties } from 'react';
+import {
+  Button,
+  chakra,
+  useColorModeValue,
+  Box,
+  Flex,
+  Text,
+  Heading,
+  Stack,
+} from '@chakra-ui/react';
 import { useLinkColor } from 'components/theme';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { skills, testimonials } from './data';
+import {
+  FiStar,
+  FiChevronLeft,
+  FiChevronRight,
+  FiMessageCircle,
+} from 'react-icons/fi';
 
-// ===== Hydration-safe deterministic PRNG helpers =====
+// Hydration safe deterministic PRNG helpers
 function makePRNG(seed = 123456789) {
   let s = seed >>> 0;
   return () => {
@@ -15,8 +31,6 @@ function makePRNG(seed = 123456789) {
 type Dot = { topPct: number; leftPct: number; duration: number; delay: number };
 
 function useStableDots(count = 50, seed = 20241008) {
-  // Use state initializer so the array is created exactly once per mount,
-  // and deterministically on both SSR and CSR.
   return useState<Dot[]>(() => {
     const rnd = makePRNG(seed);
     const arr: Dot[] = [];
@@ -24,14 +38,13 @@ function useStableDots(count = 50, seed = 20241008) {
       arr.push({
         topPct: rnd() * 100,
         leftPct: rnd() * 100,
-        duration: 2 + rnd() * 3, // 2..5s
-        delay: rnd() * 3,        // 0..3s
+        duration: 2 + rnd() * 3,
+        delay: rnd() * 3,
       });
     }
     return arr;
   })[0];
 }
-// =====================================================
 
 const emojis = ['👋', '✨', '🚀', '💫'];
 
@@ -42,21 +55,38 @@ const Home = () => {
   const [hoveredCard, setHoveredCard] = useState<number | null>(null);
   const [hoveredHeading, setHoveredHeading] = useState(false);
   const [hoveredAvatar, setHoveredAvatar] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAutoPlay, setIsAutoPlay] = useState(true);
+
   const router = useRouter();
 
-  // Color mode values
   const textColor = useColorModeValue('#2D3748', '#FFFFFF');
-  const cardTextColor = useColorModeValue('#000', '#FFFFFF');
+  const cardTextColor = useColorModeValue('#000000', '#FFFFFF');
+  const linkColor = useLinkColor();
+  const dots = useStableDots(50, 987654321);
 
-  // Keep emoji index in range if you keep clicking
+  // autoplay
   useEffect(() => {
-    const interval = setInterval(() => {
-      if (emojiCounter >= 3) setEmojiCounter(0);
-    }, 500);
-    return () => clearInterval(interval);
-  }, [emojiCounter]);
+    if (!isAutoPlay) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    }, 6000);
+    return () => clearInterval(timer);
+  }, [isAutoPlay]);
 
-  // Mouse-follow blobs (only attaches on client)
+  // emoji animation
+  useEffect(() => {
+    if (!showEmoji) return;
+    const timer = setInterval(() => {
+      setEmojiCounter((prev) => {
+        const next = prev + 1;
+        return next > emojis.length - 1 ? 0 : next;
+      });
+    }, 500);
+    return () => clearInterval(timer);
+  }, [showEmoji]);
+
+  // mouse parallax for blobs
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
@@ -68,52 +98,63 @@ const Home = () => {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  const skills = [
-    'MERN', 'TypeScript', 'Python', 'AWS', 'Tailwind', 'Material UI', 'My SQL', 'Docker', 'Redis'
-  ];
+  const activeTestimonial = testimonials[activeIndex];
 
-  const linkColor = useLinkColor();
-
-  // NEW: deterministic dots (no Math.random() in render)
-  const dots = useStableDots(50, 987654321);
+  const dotStyle = (index: number): CSSProperties => ({
+    width: index === activeIndex ? 24 : 8,
+    height: 8,
+    borderRadius: 999,
+    background: index === activeIndex ? '#a855f7' : 'rgba(255,255,255,0.3)',
+    opacity: index === activeIndex ? 1 : 0.5,
+    transition: 'all 0.25s',
+    cursor: 'pointer',
+  });
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      position: 'relative',
-      overflow: 'hidden'
-    }}>
-      {/* Decorative background */}
-      <div style={{
-        position: 'absolute',
-        inset: 0,
+    <div
+      style={{
+        minHeight: '100vh',
+        position: 'relative',
         overflow: 'hidden',
-        pointerEvents: 'none'
-      }}>
-        <div style={{
+      }}
+    >
+      {/* Decorative background */}
+      <div
+        style={{
           position: 'absolute',
-          width: '384px',
-          height: '384px',
-          background: 'rgba(168, 85, 247, 0.1)',
-          borderRadius: '50%',
-          filter: 'blur(96px)',
-          top: '-192px',
-          left: '-192px',
-          transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
-          transition: 'transform 0.3s ease-out'
-        }} />
-        <div style={{
-          position: 'absolute',
-          width: '384px',
-          height: '384px',
-          background: 'rgba(249, 115, 22, 0.1)',
-          borderRadius: '50%',
-          filter: 'blur(96px)',
-          bottom: '-192px',
-          right: '-192px',
-          transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
-          transition: 'transform 0.3s ease-out'
-        }} />
+          inset: 0,
+          overflow: 'hidden',
+          pointerEvents: 'none',
+        }}
+      >
+        <div
+          style={{
+            position: 'absolute',
+            width: '384px',
+            height: '384px',
+            background: 'rgba(168, 85, 247, 0.1)',
+            borderRadius: '50%',
+            filter: 'blur(96px)',
+            top: '-192px',
+            left: '-192px',
+            transform: `translate(${mousePosition.x}px, ${mousePosition.y}px)`,
+            transition: 'transform 0.3s ease-out',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            width: '384px',
+            height: '384px',
+            background: 'rgba(249, 115, 22, 0.1)',
+            borderRadius: '50%',
+            filter: 'blur(96px)',
+            bottom: '-192px',
+            right: '-192px',
+            transform: `translate(${-mousePosition.x}px, ${-mousePosition.y}px)`,
+            transition: 'transform 0.3s ease-out',
+          }}
+        />
         <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
           {dots.map((d, i) => (
             <div
@@ -127,322 +168,355 @@ const Home = () => {
                 top: `${d.topPct}%`,
                 left: `${d.leftPct}%`,
                 animation: `pulse ${d.duration}s ease-in-out infinite`,
-                animationDelay: `${d.delay}s`
+                animationDelay: `${d.delay}s`,
               }}
             />
           ))}
         </div>
       </div>
 
-      <div style={{
-        position: 'relative',
-        zIndex: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        padding: '80px 16px'
-      }}>
-        <div style={{
-          width: '100%',
-          maxWidth: '1152px',
-          margin: '0 auto'
-        }}>
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: '32px',
-            marginBottom: '48px',
-            flexWrap: 'wrap',
-            justifyContent: 'center'
-          }}>
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 10,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          minHeight: '100vh',
+          padding: '80px 16px',
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            maxWidth: '1152px',
+            margin: '0 auto',
+          }}
+        >
+          {/* Hero */}
+          <Flex
+            direction={{ base: 'column', md: 'row' }}
+            align="center"
+            gap="32px"
+            mb="48px"
+            justify="center"
+            wrap="wrap"
+          >
             {/* Greeting and Name */}
-            <div style={{ textAlign: 'left' }}>
-              <div style={{ position: 'relative', marginBottom: '16px' }}>
-                <div style={{
-                  position: 'absolute',
-                  left: '-64px',
-                  top: 0,
-                  fontSize: '36px'
-                }}>
+            <Box textAlign="left">
+              <Box position="relative" mb="16px">
+                <Box
+                  position="absolute"
+                  left="-64px"
+                  top={0}
+                  fontSize="36px"
+                  display={{ base: 'none', md: 'block' }}
+                >
                   {emojis.map((emoji, index) => (
-                    <div
+                    <Box
                       key={index}
-                      style={{
-                        position: 'absolute',
-                        opacity: showEmoji && emojiCounter === index ? 1 : 0,
-                        transform: showEmoji && emojiCounter === index ? 'translateY(-48px)' : 'translateY(0)',
-                        transition: 'all 0.5s'
-                      }}
+                      position="absolute"
+                      opacity={showEmoji && emojiCounter === index ? 1 : 0}
+                      transform={
+                        showEmoji && emojiCounter === index
+                          ? 'translateY(-48px)'
+                          : 'translateY(0)'
+                      }
+                      transition="all 0.5s"
                     >
                       {emoji}
-                    </div>
+                    </Box>
                   ))}
-                </div>
+                </Box>
 
-                {/* Greeting */}
-                <div style={{ position: 'relative', display: 'inline-block' }}>
+                <Box position="relative" display="inline-block">
                   <h1
                     style={{
                       fontSize: '72px',
                       fontWeight: 'bold',
                       cursor: 'pointer',
                       display: 'inline-block',
-                      background: 'linear-gradient(to right, #fb923c, #c084fc, #60a5fa)',
+                      background:
+                        'linear-gradient(to right, #fb923c, #c084fc, #60a5fa)',
                       backgroundSize: '200% auto',
                       WebkitBackgroundClip: 'text',
                       WebkitTextFillColor: 'transparent',
                       backgroundClip: 'text',
                       animation: 'gradient 3s ease infinite',
-                      margin: 0
+                      margin: 0,
                     }}
                     onClick={() => {
-                      setEmojiCounter((prev) => prev + 1);
+                      setEmojiCounter((prev) => (prev + 1) % emojis.length);
                       setShowEmoji(true);
                     }}
                     onMouseEnter={() => setHoveredHeading(true)}
                     onMouseLeave={() => setHoveredHeading(false)}
                   >
                     <span>Hey!</span>
-                    <span style={{
-                      display: 'inline-block',
-                      marginLeft: '8px',
-                      animation: hoveredHeading ? 'spin 1s linear infinite' : 'none'
-                    }}>👋</span>
+                    <span
+                      style={{
+                        display: 'inline-block',
+                        marginLeft: '8px',
+                        animation: hoveredHeading ? 'spin 1s linear infinite' : 'none',
+                      }}
+                    >
+                      👋
+                    </span>
                   </h1>
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '-8px',
-                    left: 0,
-                    width: '100%',
-                    height: '4px',
-                    background: 'linear-gradient(to right, #f97316, #a855f7)',
-                    transform: hoveredHeading ? 'scaleX(1)' : 'scaleX(0)',
-                    transition: 'transform 0.3s',
-                    transformOrigin: 'left'
-                  }} />
-                </div>
-              </div>
+                  <Box
+                    position="absolute"
+                    bottom="-8px"
+                    left={0}
+                    width="100%"
+                    height="4px"
+                    bgGradient="linear(to-r, orange.500, purple.500)"
+                    transform={hoveredHeading ? 'scaleX(1)' : 'scaleX(0)'}
+                    transition="transform 0.3s"
+                    transformOrigin="left"
+                  />
+                </Box>
+              </Box>
 
-              <h2 style={{
-                fontSize: '40px',
-                fontWeight: 300,
-                color: textColor,
-                margin: 0
-              }}>
+              <Heading
+                as="h2"
+                fontSize={{ base: '2xl', md: '40px' }}
+                fontWeight={300}
+                color={textColor}
+                m={0}
+              >
                 I am{' '}
-                <chakra.span
-                  color={linkColor}
-                  style={{ fontWeight: 'bold' }}
-                >
+                <chakra.span color={linkColor} fontWeight="bold">
                   M Mustafa Ali
                 </chakra.span>
-              </h2>
-            </div>
+              </Heading>
+            </Box>
 
             {/* Avatar */}
-            <div
-              style={{ position: 'relative' }}
+            <Box
+              position="relative"
               onMouseEnter={() => setHoveredAvatar(true)}
               onMouseLeave={() => setHoveredAvatar(false)}
             >
-              <div style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'linear-gradient(to right, #f97316, #a855f7)',
-                borderRadius: '50%',
-                filter: 'blur(48px)',
-                opacity: hoveredAvatar ? 1 : 0.75,
-                transition: 'opacity 0.5s',
-                animation: 'pulse 2s ease-in-out infinite'
-              }} />
-              <div style={{ position: 'relative' }}>
-                <div style={{
-                  width: '200px',
-                  height: '200px',
-                  borderRadius: '50%',
-                  overflow: 'hidden',
-                  border: '4px solid rgba(255, 255, 255, 0.1)',
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                  transform: hoveredAvatar ? 'scale(1.1)' : 'scale(1)',
-                  transition: 'transform 0.5s'
-                }}>
+              <Box
+                position="absolute"
+                inset={0}
+                bgGradient="linear(to-r, orange.500, purple.500)"
+                borderRadius="full"
+                filter="blur(48px)"
+                opacity={hoveredAvatar ? 1 : 0.75}
+                transition="opacity 0.5s"
+                animation="pulse 2s ease-in-out infinite"
+              />
+              <Box position="relative">
+                <Box
+                  w="200px"
+                  h="200px"
+                  borderRadius="full"
+                  overflow="hidden"
+                  border="4px solid rgba(255,255,255,0.1)"
+                  boxShadow="0 25px 50px -12px rgba(0,0,0,0.25)"
+                  transform={hoveredAvatar ? 'scale(1.1)' : 'scale(1)'}
+                  transition="transform 0.5s"
+                >
                   <img
-                    src="https://avatars2.githubusercontent.com/u/37842853?v=4"
+                    src="/assets/images/Profiles/user.JPG"
                     alt="M Mustafa Ali"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                    }}
                   />
-                </div>
-                {/* Floating icons */}
-                <div style={{
-                  position: 'absolute',
-                  top: '-16px',
-                  right: '-16px',
-                  width: '48px',
-                  height: '48px',
-                  background: 'linear-gradient(to bottom right, #f97316, #ea580c)',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                  animation: 'bounce 1s infinite',
-                  fontSize: '24px'
-                }}>
-                  💻
-                </div>
-                <div style={{
-                  position: 'absolute',
-                  bottom: '-16px',
-                  left: '-16px',
-                  width: '48px',
-                  height: '48px',
-                  background: 'linear-gradient(to bottom right, #a855f7, #9333ea)',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-                  animation: 'bounce 1s infinite 0.2s',
-                  fontSize: '24px'
-                }}>
-                  🚀
-                </div>
-              </div>
-            </div>
-          </div>
+                </Box>
 
-          {/* Center Content Section */}
-          <div style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
-            <div style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: '24px',
-              color: '#d1d5db',
-              fontSize: '18px',
-              lineHeight: '1.75',
-              marginBottom: '32px'
-            }}>
-              <p
-                style={{
-                  backdropFilter: 'blur(12px)',
-                  background: hoveredCard === 1 ? 'rgba(255, 255, 255, 0.1)' : 'rgba(255, 255, 255, 0.05)',
-                  padding: '24px',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  transition: 'all 0.3s',
-                  margin: 0,
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                  color: cardTextColor
-                }}
+                <Box
+                  position="absolute"
+                  top="-16px"
+                  right="-16px"
+                  w="48px"
+                  h="48px"
+                  bgGradient="linear(to-br, #f97316, #ea580c)"
+                  borderRadius="full"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  boxShadow="0 10px 15px -3px rgba(0,0,0,0.1)"
+                  animation="bounce 1s infinite"
+                  fontSize="24px"
+                >
+                  💻
+                </Box>
+                <Box
+                  position="absolute"
+                  bottom="-16px"
+                  left="-16px"
+                  w="48px"
+                  h="48px"
+                  bgGradient="linear(to-br, #a855f7, #9333ea)"
+                  borderRadius="full"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  boxShadow="0 10px 15px -3px rgba(0,0,0,0.1)"
+                  animation="bounce 1s infinite"
+                  style={{ animationDelay: '0.2s' }}
+                  fontSize="24px"
+                >
+                  🚀
+                </Box>
+              </Box>
+            </Box>
+          </Flex>
+
+          {/* Center content */}
+          <Box maxW="800px" mx="auto" textAlign="center">
+            <Stack
+              spacing="24px"
+              color="#d1d5db"
+              fontSize="18px"
+              lineHeight="1.75"
+              mb="32px"
+            >
+              <Box
+                backdropFilter="blur(12px)"
+                bg={
+                  hoveredCard === 1
+                    ? 'rgba(255,255,255,0.1)'
+                    : 'rgba(255,255,255,0.05)'
+                }
+                p="24px"
+                borderRadius="16px"
+                border="1px solid rgba(255,255,255,0.1)"
+                transition="all 0.3s"
+                m={0}
+                boxShadow="0 25px 50px -12px rgba(0,0,0,0.25)"
+                color={cardTextColor}
                 onMouseEnter={() => setHoveredCard(1)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                A <chakra.span color={linkColor} style={{ fontWeight: 600 }}>Full Stack Engineer</chakra.span> with
-                a passion for developing efficient, user-centric web solutions. Throughout my career,
-                I've consistently demonstrated a strong ability to take initiative and lead diverse
-                teams towards successful project outcomes.
-              </p>
+                A{' '}
+                <chakra.span color={linkColor} fontWeight={600}>
+                  Full Stack Engineer
+                </chakra.span>{' '}
+                with a passion for developing efficient, user centric web solutions.
+                Throughout my career I have consistently demonstrated a strong ability
+                to take initiative and lead diverse teams towards successful project
+                outcomes.
+              </Box>
 
-              <p
-                style={{
-                  backdropFilter: 'blur(12px)',
-                  padding: '24px',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
-                  transition: 'all 0.3s',
-                  margin: 0,
-                  boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
-                  color: cardTextColor
-                }}
+              <Box
+                backdropFilter="blur(12px)"
+                bg={
+                  hoveredCard === 2
+                    ? 'rgba(255,255,255,0.1)'
+                    : 'rgba(255,255,255,0.05)'
+                }
+                p="24px"
+                borderRadius="16px"
+                border="1px solid rgba(255,255,255,0.1)"
+                transition="all 0.3s"
+                m={0}
+                boxShadow="0 25px 50px -12px rgba(0,0,0,0.25)"
+                color={cardTextColor}
                 onMouseEnter={() => setHoveredCard(2)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                I excel in collaborative environments but also enjoy independently diving deep into
-                complex problems. My approach combines <span style={{ color: '#c084fc', fontWeight: 600 }}>analytical thinking</span> with{' '}
-                <span style={{ color: '#60a5fa', fontWeight: 600 }}>creativity</span>, allowing me to tackle
-                issues from multiple angles.
-              </p>
-            </div>
+                I excel in collaborative environments but also enjoy independently
+                diving deep into complex problems. My approach combines{' '}
+                <chakra.span color="#c084fc" fontWeight={600}>
+                  analytical thinking
+                </chakra.span>{' '}
+                with{' '}
+                <chakra.span color="#60a5fa" fontWeight={600}>
+                  creativity
+                </chakra.span>
+                , which allows me to tackle issues from multiple angles.
+              </Box>
+            </Stack>
 
             {/* Action buttons */}
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '16px',
-              marginBottom: '32px',
-              justifyContent: 'center'
-            }}>
+            <Flex
+              wrap="wrap"
+              gap="16px"
+              mb="32px"
+              justify="center"
+              align="center"
+            >
               <Button
                 bg={linkColor}
                 onClick={() => router.push('/projects')}
-                _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
-                style={{
-                  padding: '16px 32px',
-                  borderRadius: '9999px',
-                  fontWeight: 600,
-                  transition: 'all 0.3s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: "white",
+                _hover={{
+                  bg: '#E0E0E0',
+                  opacity: 0.9,
+                  transform: 'translateY(-2px)',
                 }}
+                px="32px"
+                py="16px"
+                borderRadius="9999px"
+                fontWeight={600}
+                transition="all 0.3s"
+                display="flex"
+                alignItems="center"
+                gap="8px"
+                border="none"
+                color="white"
               >
                 <span>View Projects</span>
                 <span style={{ fontSize: '20px' }}>⚡</span>
               </Button>
 
               <Button
+                as="a"
+                href="/assets/cv/Mustafa_Ali_SE.pdf"
+                download="Mustafa_Ali_SE.pdf"
                 bg={linkColor}
-                _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
-                style={{
-                  padding: '16px 32px',
-                  borderRadius: '9999px',
-                  fontWeight: 600,
-                  transition: 'all 0.3s',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  border: 'none',
-                  cursor: 'pointer',
-                  color: "white"
+                _hover={{
+                  bg: '#E0E0E0',
+                  opacity: 0.9,
+                  transform: 'translateY(-2px)',
                 }}
+                px="32px"
+                py="16px"
+                borderRadius="9999px"
+                fontWeight={600}
+                transition="all 0.3s"
+                display="flex"
+                alignItems="center"
+                gap="8px"
+                border="none"
+                color="white"
               >
-                <a
-                  style={{ color: "white" }}
-                  href="/assets/cv/Mustafa_Ali_SE.pdf"
-                  download="Mustafa_Ali_SE.pdf"
-                >
-                  Download Resume
-                </a>
+                Download Resume
               </Button>
-            </div>
+            </Flex>
 
-            <div style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              gap: '12px',
-              justifyContent: 'center'
-            }}>
+            {/* Skills */}
+            <Flex
+              wrap="wrap"
+              gap="12px"
+              justify="center"
+              mb="40px"
+              align="center"
+            >
               {skills.map((tech) => (
                 <Button
                   key={tech}
-                  _hover={{ bg: "#E0E0E0", opacity: 0.9, transform: 'translateY(-2px)' }}
-                  bg={linkColor}
-                  style={{
-                    padding: '8px 16px',
-                    backdropFilter: 'blur(12px)',
-                    borderRadius: '9999px',
-                    fontSize: '14px',
-                    border: '1px solid rgba(255, 255, 255, 0.1)',
-                    transition: 'all 0.3s',
-                    cursor: 'default',
-                    color: 'white'
+                  _hover={{
+                    bg: '#E0E0E0',
+                    opacity: 0.9,
+                    transform: 'translateY(-2px)',
                   }}
+                  bg={linkColor}
+                  px="16px"
+                  py="8px"
+                  backdropFilter="blur(12px)"
+                  borderRadius="9999px"
+                  fontSize="14px"
+                  border="1px solid rgba(255,255,255,0.1)"
+                  transition="all 0.3s"
+                  cursor="default"
+                  color="white"
                 >
                   {tech}
                 </Button>
@@ -454,24 +528,282 @@ const Home = () => {
                 color={linkColor}
                 size="sm"
                 mt={2}
-                alignSelf={{ base: 'center', sm: 'flex-start' }}
                 px={0}
                 fontSize={{ base: 'xs', sm: 'sm' }}
               >
                 see more
               </Button>
-            </div>
-          </div>
+            </Flex>
+
+            {/* GitHub contributions */}
+            <Box
+              maxW="800px"
+              mx="auto"
+              mb="40px"
+              borderRadius="16px"
+            >
+              <Flex
+                justify="space-between"
+                align="center"
+                mb="16px"
+                gap="8px"
+                wrap="wrap"
+              >
+                <chakra.h1
+                  fontSize="22px"
+                  fontWeight="bold"
+                  color={linkColor}
+                >
+                  GitHub contributions
+                </chakra.h1>
+
+                <a
+                  href="https://github.com/mustafaalil123"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{
+                    fontSize: '13px',
+                    textDecoration: 'underline',
+                  }}
+                >
+                  View on GitHub
+                </a>
+              </Flex>
+
+              <Box
+                maxW="900px"
+                mx="auto"
+                mt="32px"
+                mb="32px"
+                p="24px"
+                borderRadius="12px"
+                bg={useColorModeValue('#f6f8fa', 'rgba(255,255,255,0.05)')}
+                border={useColorModeValue(
+                  '1px solid #d0d7de',
+                  '1px solid rgba(255,255,255,0.1)',
+                )}
+                boxShadow={useColorModeValue(
+                  '0 1px 3px rgba(0,0,0,0.04)',
+                  '0 20px 40px rgba(0,0,0,0.4)',
+                )}
+              >
+                <Box
+                  borderRadius="8px"
+                  overflow="hidden"
+                  border={useColorModeValue(
+                    '1px solid #d8dee4',
+                    '1px solid rgba(255,255,255,0.12)',
+                  )}
+                >
+                  <img
+                    src="/assets/images/Profiles/image.png"
+                    alt="Contribution graph"
+                    style={{
+                      width: '100%',
+                      display: 'block',
+                    }}
+                  />
+                </Box>
+              </Box>
+            </Box>
+
+            {/* Testimonial section with same style bg */}
+            <Box
+              w="100%"
+              py="40px"
+              borderRadius="24px"
+              backdropFilter="blur(12px)"
+              bg="rgba(255,255,255,0.05)"
+              border="1px solid rgba(255,255,255,0.1)"
+              boxShadow="0 25px 50px -12px rgba(0,0,0,0.6)"
+            >
+              <Box textAlign="center" mb="32px">
+                <Text
+                  as="span"
+                  display="inline-flex"
+                  alignItems="center"
+                  gap="8px"
+                  px="16px"
+                  py="8px"
+                  borderRadius="999px"
+                  bg="rgba(129,140,248,0.15)"
+                  border="1px solid rgba(129,140,248,0.4)"
+                  mb="16px"
+                >
+                  <FiStar size={16} color="#c4b5fd" />
+                  <Text
+                    as="span"
+                    fontSize="sm"
+                    color="#e5e7eb"
+                    fontWeight={500}
+                  >
+                    Client Testimonials
+                  </Text>
+                </Text>
+
+                <Heading
+                  as="h3"
+                  fontSize={{ base: '2xl', md: '3xl' }}
+                  color={useColorModeValue('#111827', 'white')}
+                  mb="8px"
+                >
+                  What People Say About{' '}
+                  <chakra.span
+                    color={useColorModeValue('#111827', 'white')}
+                  >
+                    Working With Me
+                  </chakra.span>
+                </Heading>
+
+                <Text
+                  color={useColorModeValue('#111827', 'white')}
+                  fontSize="lg"
+                  maxW="640px"
+                  mx="auto"
+                >
+                  Real feedback from real projects. Every testimonial represents a
+                  successful collaboration.
+                </Text>
+              </Box>
+
+              {/* Carousel view */}
+              <Box maxW="960px" mx="auto">
+                <Box
+                  borderRadius="16px"
+                  border="1px solid rgba(255,255,255,0.18)"
+                  p={{ base: '24px', md: '40px' }}
+                  bg="rgba(15,23,42,0.9)"
+                  boxShadow="0 25px 50px -12px rgba(0,0,0,0.8)"
+                >
+                  <Flex align="center" gap="12px" flex="1" minW={0} mb="16px">
+                    <Box
+                      w="56px"
+                      h="56px"
+                      borderRadius="full"
+                      bgGradient="linear(to-br, #a855f7, #ec4899)"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
+                      color="white"
+                      fontSize="24px"
+                      fontWeight="bold"
+                      boxShadow="0 10px 25px rgba(168,85,247,0.7)"
+                      flexShrink={0}
+                    >
+                      <img
+                        style={{ borderRadius: '50%' }}
+                        src={activeTestimonial.img}
+                        alt={activeTestimonial.name}
+                      />
+                    </Box>
+
+                    <Box textAlign="left" minW={0}>
+                      <Text
+                        color="white"
+                        fontWeight="semibold"
+                        fontSize="md"
+                        mb="2px"
+                        noOfLines={1}
+                      >
+                        {activeTestimonial.name}
+                      </Text>
+
+                      <Text
+                        color="rgba(209,213,219,1)"
+                        fontSize="sm"
+                        whiteSpace="normal"
+                        wordBreak="break-word"
+                      >
+                        {activeTestimonial.role}
+                      </Text>
+                    </Box>
+                  </Flex>
+
+                  <FiMessageCircle
+                    size={40}
+                    color="#a855f7"
+                    style={{ opacity: 0.6, marginBottom: 8 }}
+                  />
+
+                  <Text
+                    color="rgba(249,250,251,1)"
+                    fontSize={{ base: 'lg', md: 'xl' }}
+                    mb="24px"
+                    lineHeight="1.8"
+                    textAlign="left"
+                  >
+                    {activeTestimonial.quote}
+                  </Text>
+                </Box>
+
+                {/* Controls */}
+                <Flex justify="center" align="center" gap="24px" mt="24px">
+                  <Button
+                    onClick={() =>
+                      setActiveIndex(
+                        (activeIndex - 1 + testimonials.length) %
+                          testimonials.length,
+                      )
+                    }
+                    borderRadius="full"
+                    w="48px"
+                    h="48px"
+                    bg="rgba(15,23,42,0.9)"
+                    border="1px solid rgba(255,255,255,0.18)"
+                    color="white"
+                    _hover={{
+                      bg: 'rgba(15,23,42,0.8)',
+                      transform: 'scale(1.05)',
+                    }}
+                  >
+                    <FiChevronLeft />
+                  </Button>
+
+                  <Flex align="center" gap="8px">
+                    {testimonials.map((_, index) => (
+                      <Box
+                        key={index}
+                        style={dotStyle(index)}
+                        onClick={() => {
+                          setActiveIndex(index);
+                          setIsAutoPlay(false);
+                        }}
+                      />
+                    ))}
+                  </Flex>
+
+                  <Button
+                    onClick={() =>
+                      setActiveIndex((activeIndex + 1) % testimonials.length)
+                    }
+                    borderRadius="full"
+                    w="48px"
+                    h="48px"
+                    bg="rgba(15,23,42,0.9)"
+                    border="1px solid rgba(255,255,255,0.18)"
+                    color="white"
+                    _hover={{
+                      bg: 'rgba(15,23,42,0.8)',
+                      transform: 'scale(1.05)',
+                    }}
+                  >
+                    <FiChevronRight />
+                  </Button>
+                </Flex>
+              </Box>
+            </Box>
+          </Box>
         </div>
 
-        <div style={{
-          position: 'absolute',
-          bottom: '32px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          animation: 'bounce 1s infinite'
-        }}>
-        </div>
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '32px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            animation: 'bounce 1s infinite',
+          }}
+        />
       </div>
 
       <style>{`

@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { NextPage } from 'next'
-import { VStack, Text, useColorModeValue } from '@chakra-ui/react'
+import { VStack, Text, useColorModeValue, Box } from '@chakra-ui/react'
+import { useRouter } from 'next/router'
 import { projectsList } from '../data/projectData'
 import PageLayout from 'components/layouts/pageLayout'
 import { PageSlideFade } from 'components/shared/animations/page-transitions'
@@ -21,7 +22,16 @@ const TURQUOISE = '#06b6d4'
 
 const Projects: NextPage<ProjectProps> = (props) => {
   const { projects } = props
-const linkcolor=useLinkColor();
+  const linkcolor = useLinkColor()
+  const router = useRouter()
+
+  const handleOpenDetail = (id: number) => {
+    router.push({
+      pathname: '/ProjectDetail',
+      query: { id },
+    })
+  }
+
   return (
     <Fragment>
       <PageLayout title={title} description={subtitle}>
@@ -37,10 +47,20 @@ const linkcolor=useLinkColor();
               {subtitle}
             </Text>
           </VStack>
+
           <VStack spacing={8} mt={['7', '7', '8']}>
             {projects.map((project, index) => (
-              <Fragment key={index}>
-                <ProjectLayoutMed project={project} />
+              <Fragment key={project.id ?? index}>
+                {/* Clickable card that opens detail page */}
+                <Box
+                  w="100%"
+                  cursor="pointer"
+                  onClick={() => handleOpenDetail(project.id)}
+                >
+                  <ProjectLayoutMed project={project} />
+                </Box>
+
+                {/* Keep your existing large layouts exactly as they are */}
                 {index % 2 === 0 ? (
                   <LeftProjectLayoutLarge project={project} />
                 ) : (
