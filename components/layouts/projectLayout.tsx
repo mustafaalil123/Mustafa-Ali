@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
 import { stagger, fadeInUp } from '../shared/animations/framerAnimations';
 import {
   useColorModeValue,
@@ -14,9 +15,23 @@ import {
 } from '@chakra-ui/react';
 import { HiOutlineExternalLink } from 'react-icons/hi';
 import { AiOutlineGithub } from 'react-icons/ai';
-import { MotionBox, MotionFlex, MotionList, MotionText } from 'components/shared/animations/motion';
+import {
+  MotionBox,
+  MotionFlex,
+  MotionList,
+  MotionText
+} from 'components/shared/animations/motion';
+
+const goToDetail = (router, id: number) => {
+  router.push({
+    pathname: '/ProjectDetail',
+    query: { id }
+  });
+};
 
 const ProjectLayoutMed = ({ project }) => {
+  const router = useRouter();
+
   return (
     <Flex
       display={['flex', 'flex', 'none']}
@@ -33,21 +48,25 @@ const ProjectLayoutMed = ({ project }) => {
       overflow="hidden"
       position="relative"
     >
-      <Box position="relative" w="full" h="12rem">
-        <a href={project.site} target="_blank" rel="noopener noreferrer">
-          <AspectRatio ratio={1.85 / 1} w="100%" h="100%">
-            <Image
-              src={project.imageLight}
-              fallback={<Skeleton />}
-              width="full"
-              height="full"
-              objectFit="cover"
-              opacity={0.7}
-              _hover={{ opacity: 1 }}
-              transition="opacity 0.3s"
-            />
-          </AspectRatio>
-        </a>
+      <Box
+        position="relative"
+        w="full"
+        h="12rem"
+        cursor="pointer"
+        onClick={() => goToDetail(router, project.id)}
+      >
+        <AspectRatio ratio={1.85 / 1} w="100%" h="100%">
+          <Image
+            src={project.imageLight}
+            fallback={<Skeleton />}
+            width="full"
+            height="full"
+            objectFit="cover"
+            opacity={0.7}
+            _hover={{ opacity: 1 }}
+            transition="opacity 0.3s"
+          />
+        </AspectRatio>
       </Box>
 
       <MotionBox
@@ -59,7 +78,10 @@ const ProjectLayoutMed = ({ project }) => {
         bg={useColorModeValue('white', 'gray.800')}
       >
         <MotionBox variants={stagger}>
-          <a href={project.site} target="_blank" rel="noopener noreferrer">
+          <Box
+            cursor="pointer"
+            onClick={() => goToDetail(router, project.id)}
+          >
             <MotionText
               variants={fadeInUp}
               fontSize="xl"
@@ -69,8 +91,8 @@ const ProjectLayoutMed = ({ project }) => {
             >
               {project.title}
             </MotionText>
-          </a>
-          
+          </Box>
+
           <MotionText
             variants={fadeInUp}
             fontSize="sm"
@@ -111,15 +133,17 @@ const ProjectLayoutMed = ({ project }) => {
                 />
               </Link>
             )}
-            <Link href={project.site} isExternal>
-              <IconButton
-                colorScheme="gray"
-                rounded="full"
-                size="sm"
-                aria-label="Visit Site"
-                icon={<HiOutlineExternalLink />}
-              />
-            </Link>
+            {project.site && (
+              <Link href={project.site} isExternal>
+                <IconButton
+                  colorScheme="gray"
+                  rounded="full"
+                  size="sm"
+                  aria-label="Visit Site"
+                  icon={<HiOutlineExternalLink />}
+                />
+              </Link>
+            )}
           </MotionFlex>
         </MotionBox>
       </MotionBox>
@@ -128,6 +152,8 @@ const ProjectLayoutMed = ({ project }) => {
 };
 
 const LeftProjectLayoutLarge = ({ project }) => {
+  const router = useRouter();
+
   return (
     <Flex width="full" display={['none', 'none', 'flex']} position="relative" minH="24rem">
       <MotionBox
@@ -151,25 +177,25 @@ const LeftProjectLayoutLarge = ({ project }) => {
         _hover={{ border: 'md', shadow: 'lg' }}
         overflow="hidden"
         position="relative"
+        cursor="pointer"
+        onClick={() => goToDetail(router, project.id)}
       >
-        <a href={project.site} target="_blank" rel="noopener noreferrer">
-          <AspectRatio ratio={1.85 / 1} w="100%" h="100%" rounded="xl">
-            <Image
-              src={project.imageLight}
-              fallback={<Skeleton />}
-              width="full"
-              height="full"
-              position="absolute"
-              rounded="xl"
-              objectFit="cover"
-              opacity={0.5}
-              _hover={{ opacity: 1 }}
-              transition="opacity 0.3s"
-            />
-          </AspectRatio>
-        </a>
+        <AspectRatio ratio={1.85 / 1} w="100%" h="100%" rounded="xl">
+          <Image
+            src={project.imageLight}
+            fallback={<Skeleton />}
+            width="full"
+            height="full"
+            position="absolute"
+            rounded="xl"
+            objectFit="cover"
+            opacity={0.5}
+            _hover={{ opacity: 1 }}
+            transition="opacity 0.3s"
+          />
+        </AspectRatio>
       </MotionBox>
-      
+
       <MotionBox
         initial="initial"
         animate="animate"
@@ -181,7 +207,10 @@ const LeftProjectLayoutLarge = ({ project }) => {
         textAlign="right"
       >
         <motion.div variants={stagger}>
-          <a href={project.site} target="_blank" rel="noopener noreferrer">
+          <Box
+            cursor="pointer"
+            onClick={() => goToDetail(router, project.id)}
+          >
             <MotionText
               variants={fadeInUp}
               fontSize="3xl"
@@ -191,8 +220,8 @@ const LeftProjectLayoutLarge = ({ project }) => {
             >
               {project.title}
             </MotionText>
-          </a>
-          
+          </Box>
+
           <Box width="full" mt="2">
             <MotionText
               variants={fadeInUp}
@@ -205,7 +234,7 @@ const LeftProjectLayoutLarge = ({ project }) => {
             >
               {project.description}
             </MotionText>
-            
+
             {project.techStack && (
               <MotionList
                 variants={fadeInUp}
@@ -238,15 +267,17 @@ const LeftProjectLayoutLarge = ({ project }) => {
                 />
               </Link>
             )}
-            <Link href={project.site} isExternal>
-              <IconButton
-                colorScheme="gray"
-                rounded="full"
-                size="md"
-                aria-label="Visit Site"
-                icon={<HiOutlineExternalLink />}
-              />
-            </Link>
+            {project.site && (
+              <Link href={project.site} isExternal>
+                <IconButton
+                  colorScheme="gray"
+                  rounded="full"
+                  size="md"
+                  aria-label="Visit Site"
+                  icon={<HiOutlineExternalLink />}
+                />
+              </Link>
+            )}
           </MotionFlex>
         </motion.div>
       </MotionBox>
@@ -255,6 +286,8 @@ const LeftProjectLayoutLarge = ({ project }) => {
 };
 
 const RightProjectLayoutLarge = ({ project }) => {
+  const router = useRouter();
+
   return (
     <Flex width="full" display={['none', 'none', 'flex']} position="relative" minH="24rem">
       <MotionBox
@@ -268,7 +301,10 @@ const RightProjectLayoutLarge = ({ project }) => {
         textAlign="left"
       >
         <motion.div variants={stagger}>
-          <a href={project.site} target="_blank" rel="noopener noreferrer">
+          <Box
+            cursor="pointer"
+            onClick={() => goToDetail(router, project.id)}
+          >
             <MotionText
               variants={fadeInUp}
               fontSize="3xl"
@@ -278,8 +314,8 @@ const RightProjectLayoutLarge = ({ project }) => {
             >
               {project.title}
             </MotionText>
-          </a>
-          
+          </Box>
+
           <Box width="full" mt="2">
             <MotionText
               variants={fadeInUp}
@@ -292,7 +328,7 @@ const RightProjectLayoutLarge = ({ project }) => {
             >
               {project.description}
             </MotionText>
-            
+
             {project.techStack && (
               <MotionList
                 variants={fadeInUp}
@@ -325,19 +361,21 @@ const RightProjectLayoutLarge = ({ project }) => {
                 />
               </Link>
             )}
-            <Link href={project.site} isExternal>
-              <IconButton
-                colorScheme="gray"
-                rounded="full"
-                size="md"
-                aria-label="Visit Site"
-                icon={<HiOutlineExternalLink />}
-              />
-            </Link>
+            {project.site && (
+              <Link href={project.site} isExternal>
+                <IconButton
+                  colorScheme="gray"
+                  rounded="full"
+                  size="md"
+                  aria-label="Visit Site"
+                  icon={<HiOutlineExternalLink />}
+                />
+              </Link>
+            )}
           </MotionFlex>
         </motion.div>
       </MotionBox>
-      
+
       <MotionBox
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -359,23 +397,23 @@ const RightProjectLayoutLarge = ({ project }) => {
         _hover={{ border: 'md', shadow: 'lg' }}
         overflow="hidden"
         position="relative"
+        cursor="pointer"
+        onClick={() => goToDetail(router, project.id)}
       >
-        <a href={project.site} target="_blank" rel="noopener noreferrer">
-          <AspectRatio ratio={1.85 / 1} w="100%" h="100%" rounded="xl">
-            <Image
-              src={project.imageLight}
-              fallback={<Skeleton />}
-              width="full"
-              height="full"
-              position="absolute"
-              rounded="xl"
-              objectFit="cover"
-              opacity={0.5}
-              _hover={{ opacity: 1 }}
-              transition="opacity 0.3s"
-            />
-          </AspectRatio>
-        </a>
+        <AspectRatio ratio={1.85 / 1} w="100%" h="100%" rounded="xl">
+          <Image
+            src={project.imageLight}
+            fallback={<Skeleton />}
+            width="full"
+            height="full"
+            position="absolute"
+            rounded="xl"
+            objectFit="cover"
+            opacity={0.5}
+            _hover={{ opacity: 1 }}
+            transition="opacity 0.3s"
+          />
+        </AspectRatio>
       </MotionBox>
     </Flex>
   );
