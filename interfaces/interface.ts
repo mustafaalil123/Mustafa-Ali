@@ -54,11 +54,10 @@ export interface BlogPostProps {
 }
 
 // interfaces/interface.ts
-
 export interface ProjectCaseStudy {
-  images: string[]          // list of image urls
-  longDescription: string   // full case study description
-  role?: string             // your role on the project
+  images: string[]          
+    longDescription: string | string[]; 
+  role?: string             
   responsibilities?: string[]
   challenges?: string[]
   results?: string[]
@@ -72,7 +71,7 @@ export interface Project {
   site?: string
   description: string
   techStack: string[]
-  caseStudy?: ProjectCaseStudy   // new field
+  caseStudy?: ProjectCaseStudy 
 }
 
 export interface ProjectProps {
