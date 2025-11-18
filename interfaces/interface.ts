@@ -53,13 +53,26 @@ export interface BlogPostProps {
   posts: BlogPost[];
 }
 
-interface Project {
-  title: string;
-  imageLight: string;
-  blurHash: string;
-  site: string;
-  description: string;
-  techStack: string[];
+// interfaces/interface.ts
+
+export interface ProjectCaseStudy {
+  images: string[]          // list of image urls
+  longDescription: string   // full case study description
+  role?: string             // your role on the project
+  responsibilities?: string[]
+  challenges?: string[]
+  results?: string[]
+}
+
+export interface Project {
+  id: number
+  title: string
+  imageLight: string
+  blurHash?: string
+  site?: string
+  description: string
+  techStack: string[]
+  caseStudy?: ProjectCaseStudy   // new field
 }
 
 export interface ProjectProps {
