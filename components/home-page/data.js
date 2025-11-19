@@ -28,6 +28,12 @@ img:'https://media.licdn.com/dms/image/v2/C4D03AQET-YTld0LUYA/profile-displaypho
         "I had the pleasure of working with Mustafa on a project where he served as a front-end developer. Mustafa's approach to tackling problems and designing components is exemplary. He adheres to industry standards and best practices, ensuring that his components are not only reusable and maintainable but also highly efficient. Mustafa excels at optimizing application performance and enhancing UI/UX. His keen eye for detail and commitment to user-centered design have significantly improved our application's usability and aesthetic appeal. Moreover, Mustafa's efforts in streamlining the build process have substantially reduced the time required for development cycles, contributing to faster delivery and higher productivity. In addition to his technical skills, Mustafa is a team player who communicates effectively and collaborates seamlessly with both developers and designers. His proactive attitude and willingness to take on challenges make him an invaluable asset to any project. I am confident that Mustafa will bring innovation, expertise, and a collaborative spirit to any front-end development role he undertakes. I would highly Recommend him.",
         img:'https://media.licdn.com/dms/image/v2/D4D03AQGZzbc5Hp2o2g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1697665211920?e=1764806400&v=beta&t=hRARPNwke9Pph6cGiucpDE9CyPS1R6a7eQsXlbW0h9M'
     },
+    {
+      name:"Upwork",
+      role:"Nestjs,Nextjs,Neo4j developer",
+      quote:"Mustafa is an excellent full stack developer. He has strong skills in both frontend and backend coding. Mustafa understood our project quickly and wrote clean, efficient code. He communicated clearly and met all deadlines. He worked well with our team and shared helpful ideas. Mustafa solved problems before they became big issues. I highly recommend him for any web development job. He's skilled, professional, and easy to work with. We'll definitely hire him again.",
+      img:"assets/images/logos/upw.png"
+    }
   ];
 
 

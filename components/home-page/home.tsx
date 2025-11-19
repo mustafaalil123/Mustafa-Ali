@@ -76,7 +76,7 @@ const inactiveDotColor = useColorModeValue(
     if (!isAutoPlay) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
+    }, 30000);
     return () => clearInterval(timer);
   }, [isAutoPlay]);
 
@@ -97,7 +97,6 @@ const inactiveDotColor = useColorModeValue(
     return () => clearInterval(timer);
   }, [showEmoji]);
 
-  // mouse parallax for blobs
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
