@@ -55,7 +55,6 @@ const Home = () => {
   const [hoveredHeading, setHoveredHeading] = useState(false);
   const [hoveredAvatar, setHoveredAvatar] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [isQuoteExpanded, setIsQuoteExpanded] = useState(false);
 
   const router = useRouter();
@@ -71,14 +70,6 @@ const inactiveDotColor = useColorModeValue(
 
   const dots = useStableDots(50, 987654321);
 
-  // autoplay
-  useEffect(() => {
-    if (!isAutoPlay) return;
-    const timer = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 30000);
-    return () => clearInterval(timer);
-  }, [isAutoPlay]);
 
   // reset quote expansion when testimonial changes
   useEffect(() => {
@@ -817,7 +808,6 @@ const inactiveDotColor = useColorModeValue(
                         style={dotStyle(index)}
                         onClick={() => {
                           setActiveIndex(index);
-                          setIsAutoPlay(false);
                         }}
                       />
                     ))}
