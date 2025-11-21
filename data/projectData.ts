@@ -159,5 +159,31 @@ export const projectsList = [
       ],role: 'Frontend'
     },
   },
+ {id:7,
+    title: 'Better School',
+    imageLight: '/assets/images/ProjectsImage/BetterSchool/2.PNG  ',
+    blurHash: 'L2M5%%0000EN00I:-oIp00kC?^sl',
+    site: 'https://betterschoolevents.com',
+    description:
+      'Better Scholl is a scholl event management platform designed to simplify event creation, sharing, and discovery. But with CI/CD custom payouts, geo-based Alerts, assets optimization, and scable architecture.',
+    techStack: ['React', 'MUI',],
+    caseStudy: {
+      images: [
+        '/assets/images/ProjectsImage/BetterSchool/1.PNG',
+        '/assets/images/ProjectsImage/BetterSchool/2.PNG',
+        '/assets/images/ProjectsImage/BetterSchool/3.PNG',
+        '/assets/images/ProjectsImage/BetterSchool/4.PNG',
+        '/assets/images/ProjectsImage/BetterSchool/5.PNG',
+      ],
+      longDescription:[
+'Education happens everywhere—not just in books, but in hands-on experiences, events, and local adventures. Our platform connects families with engaging, community-driven events that enrich every childs journey. We are redefining education by showing that the best learning happens beyond the classroom.',
+'Whether you homeschool or just want to supplement your childs learning, BetterSchool makes discovering new events as easy as booking a ticket. We envision a world where learning is shared, friendships are built, and everyone feels connected.',
+'We bring a world of educational adventures to one simple platform.',
+'Anyone with a passion for education can become an organizer on BetterSchool.',
+'Teachers, parents, and local experts can host events, share knowledge, and earn income —all while making a positive impact.',
+'At BetterSchool we are committed to making education fun, accessible, and community-focused for families',
 
+      ],role: 'Frontend'
+    },
+  },
 ];
