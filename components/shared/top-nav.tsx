@@ -34,7 +34,7 @@ import { MotionBox } from 'components/shared/animations/motion';
 const webLinks = [
   { name: 'About', path: '/about' },
   { name: 'Projects', path: '/projects' },
-  { name: 'Certificate', path: '/certificate' }
+  { name: 'Certifications', path: '/certificate' }
 
 ];
 
@@ -43,7 +43,7 @@ const mobileLinks = [
   { name: 'Projects', path: '/projects' },
   { name: 'Tech Stack', path: '/tech-stack' },
   { name: 'Achievements', path: '/achievements' },
-  { name: 'Certificate', path: '/certificate' }
+  { name: 'Certifications', path: '/certificate' }
 
 ];
 
