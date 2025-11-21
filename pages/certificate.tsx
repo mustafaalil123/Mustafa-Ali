@@ -122,15 +122,13 @@ const Card: React.FC<CardData> = ({
                 </Heading>
                 {role && (
                   <Text
-                  style={{
-                    textAlign:"left"
-                  }}
-                  fontSize={{ base: 'sm', md: 'md' }} color={textColor}>
+                    fontSize={{ base: 'sm', md: 'md' }}
+                    color={textColor}
+                    textAlign="left"
+                  >
                     {role}
                   </Text>
                 )}
-
-               
               </Stack>
             </Flex>
 
@@ -158,15 +156,16 @@ const Card: React.FC<CardData> = ({
           {/* Points */}
           <Box mt={4}>
             {firstThree.map((p, i) => (
-              <Text 
-                style={{
-                        textAlign:"left"
-                      }}
-              key={i} fontSize="sm" color={textColor} mb={1}>
+              <Text
+                key={i}
+                fontSize="sm"
+                color={textColor}
+                mb={1}
+                textAlign="left"
+              >
                 • {p}
               </Text>
             ))}
-            
 
             {remaining.length > 0 && (
               <>
@@ -174,10 +173,12 @@ const Card: React.FC<CardData> = ({
                   <Box mt={2}>
                     {remaining.map((p, i) => (
                       <Text
-                      style={{
-                        textAlign:"left"
-                      }}
-                      key={i} fontSize="sm" color={textColor} mb={1}>
+                        key={i}
+                        fontSize="sm"
+                        color={textColor}
+                        mb={1}
+                        textAlign="left"
+                      >
                         • {p}
                       </Text>
                     ))}
@@ -191,55 +192,59 @@ const Card: React.FC<CardData> = ({
                   mt={2}
                   onClick={() => setExpanded(!expanded)}
                 >
-                  {expanded
-                    ? 'See less'
-                    : `See more (${remaining.length})`}
+                  {expanded ? 'See less' : `See more (${remaining.length})`}
                 </Button>
               </>
             )}
           </Box>
-           {skills.length > 0 && (
-                  <Wrap spacing={2}>
-                    {skills.map((skill) => (
-                      <WrapItem key={skill}>
-                        <Box
-                          px={2}
-                          py={1}
-                          rounded="full"
-                          bg={skillBg}
-                          fontSize="xs"
-                          fontWeight="500"
-                        >
-                          {skill}
-                        </Box>
-                      </WrapItem>
-                    ))}
-                  </Wrap>
-                )}
 
-          {/* Button Section */}
-          {link && (
+          {/* Skills and Visit button on same row */}
+          {(skills.length > 0 || link) && (
             <Flex
               mt={4}
-              justify={{ base: 'flex-start', sm: 'flex-end' }}
+              justify="space-between"
+              align="center"
+              flexDir={{ base: 'column', sm: 'row' }}
+              gap={4}
             >
-              <ChakraLink
-                href={link}
-                isExternal
-                px={4}
-                py={2}
-                rounded="md"
-                fontSize="sm"
-                fontWeight="600"
-                bg={buttonBg}
-                color={buttonColor}
-                _hover={{
-                  bg: buttonBgHover,
-                  textDecoration: 'none'
-                }}
-              >
-                Visit Certificate
-              </ChakraLink>
+              {skills.length > 0 && (
+                <Wrap spacing={2}>
+                  {skills.map((skill) => (
+                    <WrapItem key={skill}>
+                      <Box
+                        px={2}
+                        py={1}
+                        rounded="full"
+                        bg={skillBg}
+                        fontSize="xs"
+                        fontWeight="500"
+                      >
+                        {skill}
+                      </Box>
+                    </WrapItem>
+                  ))}
+                </Wrap>
+              )}
+
+              {link && (
+                <ChakraLink
+                  href={link}
+                  isExternal
+                  px={4}
+                  py={2}
+                  rounded="md"
+                  fontSize="sm"
+                  fontWeight="600"
+                  bg={buttonBg}
+                  color={buttonColor}
+                  _hover={{
+                    bg: buttonBgHover,
+                    textDecoration: 'none'
+                  }}
+                >
+                  Visit Certificate
+                </ChakraLink>
+              )}
             </Flex>
           )}
         </Box>
