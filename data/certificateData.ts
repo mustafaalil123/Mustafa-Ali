@@ -52,5 +52,18 @@ export const certifications: CardData[] = [
   "Completed multiple hands on projects demonstrating full game creation from idea to final build."
 ],
     link:"https://www.coursera.org/account/accomplishments/certificate/QKCMM6ALUNJ8"
-  }
+  },{
+    title: 'Introduction to Game Development',
+    role: 'BSI',
+    period: '2025',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/BSI-logo-charcoal.png',
+    skills: ['Information Security'],
+   points: [
+"Protecting the confidentiality, integrity, and availability of information",
+"Managing risks related to information: identifying threats, vulnerabilities, potential impacts, and controlling/mitigating those risks.",
+"Establishing policies, procedures and controls so that information assets (data, systems, processes) are managed and secured.",
+"Ensuring legal, regulatory and contractual obligations are met (for data protection, privacy, third-party obligations)."
+],
+    link:"https://media.licdn.com/dms/image/v2/D4D22AQHJLkVs3zxMlA/feedshare-shrink_1280/B4DZjL1BuQHsA0-/0/1755766334759?e=1765411200&v=beta&t=KSo98ALIA7XA2Ug6FbiQvBtNnnXa5j_NWC8jEGEMcD8"
+  },
 ];
