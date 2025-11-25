@@ -19,9 +19,10 @@ export const certifications: CardData[] = [
     logo: '/assets/images/Certificate/hk.jpg',
     skills: [ 'JavaScript'],
     points: [
-      'Completed JavaScript with hands on projects.',
-      'covers topics like Design Patterns, Memory management, concurrency model, and event loops, among others.',
-      'Learned testing, performance and deployment basics.'
+      'Completed a comprehensive JavaScript program that included multiple hands-on projects, practical exercises, and real implementation tasks. Developed confidence in building core features from scratch through consistent coding practice.',
+      'Deepened knowledge of design patterns, garbage collection, memory leaks, concurrency architecture, event loop cycles and runtime performance tuning.',
+      'Gained experience with automated testing, debugging pipelines, CI ready deployments and code quality best practices.',
+      'Explored deep technical topics such as object creation patterns, memory profiling, garbage collection, concurrency architecture, microtask and macrotask queues, and event loop optimization. Achieved a clear mental model of JavaScript internals.'
     ],
     link:"https://www.hackerrank.com/certificates/31bd8885acbb"
   },
@@ -32,10 +33,11 @@ export const certifications: CardData[] = [
     logo: '/assets/images/Certificate/hk.jpg',
     skills: [ 'JavaScript'],
     points: [
-      'Completed JavaScript with hands on projects.',
-      'Learned testing, performance and deployment basics.',
-      'It covers topics like Design Patterns, Memory management, concurrency model, and event loops, among others.'
-    ],
+      'Completed an in-depth JavaScript specialization centered on production-grade, hands-on projects.',
+      'Strengthened expertise in automated testing, runtime performance optimization and modern deployment pipelines.',
+    'Studied advanced concepts such as design patterns, memory profiling, concurrency and event loop mechanics.',
+  'Gained proficiency in automated testing strategies, debugging pipelines, performance profiling, and deployment workflows. Learned how to evaluate code health, eliminate inefficiencies, and prepare applications for real-world environments.'  
+  ],
     link:"https://www.hackerrank.com/certificates/31bd8885acbb"
   },
   {
