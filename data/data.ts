@@ -62,8 +62,12 @@ export const companies = [
     skills: ['javascript', 'react', 'solidity', 'ethereum','node'],
     period: 'Jan 2022 - Feb 2022',
     logo: '/assets/images/logos/netixsol.png',
- 
-  },
+points: [
+  'Assisted in developing decentralized applications by working with Solidity smart contracts and Ethereum blockchain fundamentals.',
+  'Gained practical exposure to React and JavaScript while contributing to UI components for Web3-enabled interfaces.',
+  'Worked with Node.js to integrate blockchain interactions and support backend functionality for contract execution.',
+  'Collaborated with senior developers to understand wallet connectivity, transaction flows and blockchain testing environments.'
+]  },
   {
     title: 'Mindstorm Studios',
     alt: 'BT image',
@@ -86,6 +90,11 @@ export const institutes = [
     period: '2018 - 2022',
     startingYear: '2018',
     logo: '/assets/images/logos/fast.png',
+    points: [
+'Graduated in Computer Science from FAST NUCES with top academic standing.',
+      'Awarded Gold Medal, graduated Summa Cum Laude (higher honors – Batch topper).',
+    'Final Year Project: Selected By IGNITE Pakistan.'
+  ],
     awards: [
       {
         title: 'Speed Programming Battle',
