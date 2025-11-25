@@ -90,11 +90,11 @@ export const institutes = [
     period: '2018 - 2022',
     startingYear: '2018',
     logo: '/assets/images/logos/fast.png',
-    points: [
-'Graduated in Computer Science from FAST NUCES with top academic standing.',
-      'Awarded Gold Medal, graduated Summa Cum Laude (higher honors – Batch topper).',
-    'Final Year Project: Selected By IGNITE Pakistan.'
-  ],
+points: [
+  'Completed core coursework including Programming Fundamentals, Database Systems, Operating Systems and Usability Engineering with strong academic performance.',
+  'Gained practical experience through projects involving UI usability analysis, relational database modeling, process scheduling concepts and structured programming techniques.',
+  'Final Year Project: Selected By IGNITE Pakistan.'
+],
     awards: [
       {
         title: 'Speed Programming Battle',
