@@ -186,4 +186,107 @@ export const projectsList = [
       ],role: 'Frontend'
     },
   },
+
+
+
+  {id:8,
+    title: 'SwitchBoard Cloud',
+    imageLight: '/assets/images/ProjectsImage/SwitchBoardCloud/1.PNG  ',
+    blurHash: 'L2M5%%0000EN00I:-oIp00kC?^sl',
+    site: 'https://www.switchboardcloud.com/',
+    description:
+      'Switchboard Cloud, demonstrating how retailers can connect their ERP, WMS, Shopify, WooCommerce, Amazon, Square and other systems directly to Temu. The page includes feature highlights, supported platform logos, a real case study, a testimonial slider, FAQs and a clear final call to action. Everything is fully responsive with custom styling and a clean, professional layout.',
+    techStack: ['Next.js', 'Tailwind',],
+    caseStudy: {
+      images: [
+        '/assets/images/ProjectsImage/SwitchBoardCloud/1.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/2.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/3.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/4.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/5.PNG',
+         '/assets/images/ProjectsImage/SwitchBoardCloud/6.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/7.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/8.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/9.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/10.PNG',
+         '/assets/images/ProjectsImage/SwitchBoardCloud/11.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardCloud/12.PNG',
+      ],
+    longDescription: [
+  'Switchboard Cloud enables retailers to connect their ERP, WMS, Shopify, WooCommerce, Amazon, Square, and other systems directly to Temu with a streamlined integration experience.',
+  'Our Temu page clearly explains how Switchboard automates inventory syncing, routes orders in real time, reduces manual work, and supports seamless expansion across new markets.',
+  'Retailers can easily see all supported ecommerce platforms at a glance, including Shopify, WooCommerce, Square, BigCommerce, Ecwid, and more, making compatibility transparent and simple.',
+  'A detailed case study showcases how one retailer improved fulfillment speed and achieved near-zero inventory errors after switching to Switchboard’s Temu integration.',
+  'Customer trust is strengthened through a testimonial slider, highlighting real feedback from businesses benefiting from Switchboard’s automation.',
+  'A helpful FAQ section guides visitors through common questions, such as why Temu is valuable for sellers and how Switchboard simplifies onboarding.',
+  'The page ends with a clear call-to-action, encouraging retailers to start their Temu integration with confidence and ease.'
+],role: 'Frontend'
+    },
+  },
+
+
+
+  {id:9,
+    title: 'SwitchBoard Access',
+    imageLight: '/assets/images/ProjectsImage/SwitchBoardAccess/4.PNG  ',
+    blurHash: 'L2M5%%0000EN00I:-oIp00kC?^sl',
+    site: 'https://widget.dev.switchboardcloud.com.au/widgetTest.html?hostingProviderId=e5dd5414-4b7e-46e1-96de-e88c9e708497&companyName=DevMustafa123&managedConfiguration=true',
+    description:
+      'Switchboard Access Portal, a lightweight interface for partners to upload data, download data and view activity logs without using the main Switchboard dashboard. The portal includes secure login, a dashboard overview, upload and download workflows and a detailed activity log with statuses and timestamps, providing partners with a simple way to exchange data.',
+    techStack: ['Next.js', 'Tailwind Css',],
+    caseStudy: {
+      images: [
+        '/assets/images/ProjectsImage/SwitchBoardAccess/1.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardAccess/2.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardAccess/3.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardAccess/4.PNG',
+        '/assets/images/ProjectsImage/SwitchBoardAccess/5.PNG',
+      ],
+   longDescription: [
+  'The Switchboard Access Portal is a lightweight web interface built for partners who need to upload and download data without accessing the full Switchboard dashboard.',
+  'The portal provides a secure login system where partners authenticate using their Access credentials, ensuring privacy and controlled access.',
+  'A clear dashboard overview gives users quick visibility into activity counts, operations and timeline charts, helping them understand recent data flows.',
+  'The Upload panel allows partners to submit supported files directly into Switchboard workflows, enabling fast and simple data ingestion.',
+  'The Download panel provides tools to export orders, products, inventory and other data types, streamlining outbound integrations.',
+  'A detailed Activity Log displays every upload and download event with information such as system, operation, status, activity type and timestamp. Users can filter, paginate and export these logs for better visibility.',
+  'This portal serves as a simplified alternative to the full Switchboard interface, offering partners an easy way to exchange data and manage operations without navigating the main platform.',
+  'In simple terms, the Access Portal gives partners a clean, efficient and secure workspace for sending and retrieving data, making their operational workflows much smoother.'
+],    
+      role: 'Frontend'
+    },
+  },
+
+
+
+
+  {id:10,
+    title: 'SwitchBoard Onboarding Widget',
+    imageLight: '/assets/images/ProjectsImage/Widget/2.PNG  ',
+    blurHash: 'L2M5%%0000EN00I:-oIp00kC?^sl',
+    site: 'https://widget.dev.switchboardcloud.com.au/widgetTest.html?hostingProviderId=e5dd5414-4b7e-46e[%E2%80%A6]companyName=DevMustafa123&managedConfiguration=true',
+    description:
+      'Implemented the Switchboard Customer Onboarding Widget, an embeddable script that lets users connect systems like Shopify, Amazon, NetSuite, Odoo and more without using the main Switchboard app. The widget automatically creates the organisation, sets up accounts, configures operations and builds the full connection workflow, allowing users to complete integrations quickly with no manual setup.',
+    techStack: ['Next.js', 'Tailwind Css',],
+    caseStudy: {
+      images: [
+        '/assets/images/ProjectsImage/Widget/2.PNG',
+        '/assets/images/ProjectsImage/Widget/3.PNG',
+        '/assets/images/ProjectsImage/Widget/4.PNG',
+      ],
+     longDescription: [
+  'The Switchboard Customer Onboarding Widget is a fully embeddable tool that allows users to connect their systems to Switchboard without signing into the main platform.',
+  'Before this widget, users had to manually create organisations, configure accounts, set up operations and navigate multiple steps inside the Switchboard dashboard, making onboarding slow and technical.',
+  'With the widget, users simply paste a script into any website or frontend app, instantly gaining access to a guided integration flow.',
+  'The widget displays all supported systems such as Shopify, Amazon SP, NetSuite, Odoo, Cin7, Unleashed, Magento, WooCommerce and Finale Inventory, allowing users to choose the one they want to connect.',
+  'Each system launches its own onboarding modal, whether it is an Odoo credentials form or a Shopify OAuth flow, ensuring a simple experience for every connector.',
+  'The widget automatically creates the organisation inside Switchboard, sets up both source and destination accounts and configures the required workflows such as syncing inventory, syncing orders and loading products.',
+  'It then establishes the full connection between systems with no need for users to navigate the main Switchboard interface.',
+  'This approach removes all technical setup, speeds up onboarding, reduces support overhead and enables partners to offer Switchboard integrations directly on their websites.',
+  'In simple words, the widget turns a multi step configuration process into an automated end to end workflow, allowing users to integrate their systems by just selecting a platform and entering basic details.'
+],
+role: 'Frontend'
+    },
+  },
+
+
 ];
