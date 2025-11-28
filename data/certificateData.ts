@@ -55,7 +55,7 @@ export const certifications: CardData[] = [
 ],
     link:"https://www.coursera.org/account/accomplishments/certificate/QKCMM6ALUNJ8"
   },{
-    title: 'Introduction to Game Development',
+    title: 'Information Security',
     role: 'BSI',
     period: '2025',
     logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a5/BSI-logo-charcoal.png',

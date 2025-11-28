@@ -12,7 +12,6 @@ import {
   IconButton,
   Heading,
   Container,
-  Flex,
   chakra,
 } from '@chakra-ui/react';
 import { keyframes } from '@emotion/react';
@@ -58,7 +57,6 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
   const caseStudy = project.caseStudy!;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isOverviewExpanded, setIsOverviewExpanded] = useState(false);
-
 
   const hasCarousel = caseStudy.images && caseStudy.images.length > 0;
 
@@ -116,11 +114,12 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
           position="relative"
           zIndex={1}
         >
-          <VStack align="stretch" spacing={16} py={12}>
+          <VStack align="stretch" spacing={12} py={12}>
             {/* hero card */}
             <Box
               position="relative"
               p={{ base: 8, md: 12 }}
+              pb={{ base: 12, md: 16 }}
               borderRadius="3xl"
               overflow="hidden"
               bg={cardBg}
@@ -138,14 +137,8 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                 bgGradient={accentGradient}
               />
 
-              <Flex
-                align="center"
-                justify="space-between"
-                direction={{ base: 'column', md: 'row' }}
-                w="100%"
-                gap={4}
-              >
-                <VStack align="flex-start" spacing={3} w="100%">
+              <VStack align="stretch" spacing={8} w="100%">
+                <HStack justify="space-between" align="center" flexWrap="wrap" gap={4}>
                   <Box
                     px={4}
                     py={2}
@@ -164,99 +157,118 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                     </Text>
                   </Box>
 
-                  <Heading
-                    as="h1"
-                    size={{ base: '2xl', md: '3xl' }}
-                    bgGradient={accentGradient}
-                    bgClip="text"
-                    fontWeight="black"
-                    letterSpacing="tight"
-                    lineHeight="1.1"
-                  >
-                    {project.title}
-                  </Heading>
-                </VStack>
+                  {project.site && (
+                    <Button
+                      as="a"
+                      href={project.site}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      size="lg"
+                      h="56px"
+                      px={8}
+                      bgGradient={accentGradient}
+                      color="white"
+                      rightIcon={<HiExternalLink />}
+                      _hover={{
+                        transform: 'translateY(-2px)',
+                        boxShadow: `0 18px 40px ${shadowColor}`,
+                      }}
+                      transition="all 0.3s"
+                      fontWeight="bold"
+                      fontSize="md"
+                    >
+                      Visit project
+                    </Button>
+                  )}
+                </HStack>
 
-                {project.site && (
-                  <Button
-                    as="a"
-                    href={project.site}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    size="lg"
-                    h="56px"
-                    px={8}
-                    bgGradient={accentGradient}
-                    color="white"
-                    rightIcon={<HiExternalLink />}
-                    _hover={{
-                      transform: 'translateY(-2px)',
-                      boxShadow: `0 18px 40px ${shadowColor}`,
-                    }}
-                    transition="all 0.3s"
-                    fontWeight="bold"
-                    fontSize="md"
-                  >
-                    Visit project
-                  </Button>
-                )}
-              </Flex>
+                <Heading
+                  as="h1"
+                  size={{ base: '2xl', md: '3xl' }}
+                  bgGradient={accentGradient}
+                  bgClip="text"
+                  fontWeight="black"
+                  letterSpacing="tight"
+                  lineHeight="1.1"
+                  textAlign="center"
+                  padding={4}
+                  
+                >
+                  {project.title}
+                </Heading>
+              </VStack>
             </Box>
 
-<Box
-  p={6}
-  borderRadius="lg"
-  bg={cardBg}
-  boxShadow={useColorModeValue(
-    '0 10px 25px rgba(15,23,42,0.08)',
-    '0 20px 40px rgba(0,0,0,0.65)'
-  )}
-  border="1px solid"
-  borderColor={useColorModeValue('gray.200', 'gray.700')}
->
-  <chakra.h2
-    color={linkColor}
-    fontWeight="bold"
-    fontSize="22px"
-    textAlign="center"
-    mb={3}
-  >
-    Description
-  </chakra.h2>
+            {/* Description card */}
+            <Box
+              p={{ base: 6, md: 8 }}
+              borderRadius="2xl"
+              bg={cardBg}
+              boxShadow={useColorModeValue(
+                '0 10px 25px rgba(15,23,42,0.08)',
+                '0 20px 40px rgba(0,0,0,0.65)'
+              )}
+              border="1px solid"
+              borderColor={useColorModeValue('gray.200', 'gray.700')}
+            >
+              <chakra.h2
+                color={linkColor}
+                fontWeight="bold"
+                fontSize={{ base: 'xl', md: '22px' }}
+                textAlign="center"
+                mb={5}
+              >
+                Description
+              </chakra.h2>
 
-  <Box as="ul" pl={6} maxW="3xl" mx="auto" color={textColor} lineHeight="1.8">
-    {(isOverviewExpanded
-      ? overviewItems
-      : overviewItems.slice(0, 3) 
-    ).map((item, idx) => (
-      <chakra.li 
-      fontSize={16}
-      textAlign={'left'}
-      key={idx} mb={2}>
-        {item}
-      </chakra.li>
-    ))}
-  </Box>
+              <Box
+                as="ul"
+                pl={6}
+                maxW="3xl"
+                mx="auto"
+                color={textColor}
+                lineHeight="1.8"
+              >
+                {(isOverviewExpanded
+                  ? overviewItems
+                  : overviewItems.slice(0, 3)
+                ).map((item, idx) => (
+                  <chakra.li
+                    fontSize={{ base: '15px', md: '16px' }}
+                    textAlign="left"
+                    key={idx}
+                    mb={3}
+                  >
+                    {item}
+                  </chakra.li>
+                ))}
+              </Box>
 
-  {overviewItems.length > 4 && (
-    <HStack justify="flex-end" maxW="3xl" mx="auto" mt={3}>
-      <chakra.button
-        color={linkColor}
-        fontSize={13}
-        onClick={() => setIsOverviewExpanded(v => !v)}
-        _hover={{ textDecoration: 'underline' }}
-      >
-        {isOverviewExpanded ? 'See less' : 'See more'}
-      </chakra.button>
-    </HStack>
-  )}
-</Box>
-
+              {overviewItems.length > 3 && (
+                <HStack justify="flex-end" maxW="3xl" mx="auto" mt={4}>
+                  <chakra.button
+                    color={linkColor}
+                    fontSize="13px"
+                    fontWeight="medium"
+                    onClick={() => setIsOverviewExpanded((v) => !v)}
+                    _hover={{ textDecoration: 'underline' }}
+                  >
+                    {isOverviewExpanded ? 'See less' : 'See more'}
+                  </chakra.button>
+                </HStack>
+              )}
+            </Box>
 
             {/* screenshots carousel */}
             {hasCarousel && (
               <Box>
-                <Heading size="md" mb={6} color={textColor} textAlign="left">
+                <Heading
+                  size="md"
+                  mb={6}
+                  color={textColor}
+                  textAlign="left"
+                  fontWeight="bold"
+                >
                   Visuals
                 </Heading>
                 <Box
@@ -284,6 +296,9 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                     aspectRatio={16 / 9}
                     bg={useColorModeValue('gray.50', 'gray.900')}
                     overflow="hidden"
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
                   >
                     <Box
                       key={currentIndex}
@@ -292,6 +307,9 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                       left={0}
                       w="100%"
                       h="100%"
+                      display="flex"
+                      alignItems="center"
+                      justifyContent="center"
                       animation="fadeIn 0.5s ease-in-out"
                       sx={{
                         '@keyframes fadeIn': {
@@ -303,9 +321,10 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                       <Image
                         src={caseStudy.images[currentIndex]}
                         alt={`${project.title} screenshot ${currentIndex + 1}`}
-                        objectFit="cover"
+                        objectFit="contain"
                         w="100%"
                         h="100%"
+                        maxH="100%"
                       />
                     </Box>
 
@@ -315,7 +334,7 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                       left={0}
                       right={0}
                       h="30%"
-                      bgGradient="linear(to-b, rgba(0,0,0,0.6), transparent)"
+                      bgGradient="linear(to-b, rgba(0,0,0,0.4), transparent)"
                       pointerEvents="none"
                       zIndex={1}
                     />
@@ -325,14 +344,14 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                       left={0}
                       right={0}
                       h="40%"
-                      bgGradient="linear(to-t, rgba(0,0,0,0.8), transparent)"
+                      bgGradient="linear(to-t, rgba(0,0,0,0.6), transparent)"
                       pointerEvents="none"
                       zIndex={1}
                     />
 
                     <IconButton
                       aria-label="Previous"
-                      icon={<HiChevronLeft size={32} />}
+                      icon={<HiChevronLeft size={28} />}
                       position="absolute"
                       top="50%"
                       left={{ base: '3', md: '6' }}
@@ -349,7 +368,7 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                       borderColor="whiteAlpha.400"
                       opacity={0.9}
                       _hover={{
-                        transform: 'translateY(-50%) scale(1.15)',
+                        transform: 'translateY(-50%) scale(1.1)',
                         bg: useColorModeValue('purple.600', 'purple.500'),
                         borderColor: 'purple.300',
                         opacity: 1,
@@ -365,7 +384,7 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
 
                     <IconButton
                       aria-label="Next"
-                      icon={<HiChevronRight size={32} />}
+                      icon={<HiChevronRight size={28} />}
                       position="absolute"
                       top="50%"
                       right={{ base: '3', md: '6' }}
@@ -382,7 +401,7 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                       borderColor="whiteAlpha.400"
                       opacity={0.9}
                       _hover={{
-                        transform: 'translateY(-50%) scale(1.15)',
+                        transform: 'translateY(-50%) scale(1.1)',
                         bg: useColorModeValue('purple.600', 'purple.500'),
                         borderColor: 'purple.300',
                         opacity: 1,
@@ -483,60 +502,61 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
             )}
 
             {/* role card */}
-        <Box
-  position="relative"
-  p={8}
-  borderRadius="2xl"
-  bg={useColorModeValue(
-    'linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)',
-    'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)'
-  )}
-  backdropFilter="blur(10px)"
-  boxShadow={useColorModeValue(
-    '0 20px 60px rgba(99, 102, 241, 0.15)',
-    '0 20px 60px rgba(0, 0, 0, 0.7)'
-  )}
-  border="1px solid"
-  borderColor={useColorModeValue('purple.100', 'purple.900')}
-  overflow="hidden"
-  _before={{
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: '3px',
-    bgGradient: 'linear(to-r, purple.400, pink.400, orange.400)',
-  }}
->
-  <VStack spacing={4}>
-    <Badge
-      colorScheme="purple"
-      px={4}
-      py={1}
-      borderRadius="full"
-      fontSize="xs"
-      fontWeight="semibold"
-      textTransform="uppercase"
-      letterSpacing="wide"
-    >
-      My Role
-    </Badge>
-    
-    <chakra.p
-      fontSize={{ base: '2xl', md: '3xl' }}
-      bgGradient="linear(to-r, purple.400, pink.500)"
-      bgClip="text"
-      textAlign="center"
-      maxW="3xl"
-      fontWeight="extrabold"
-      mx="auto"
-      lineHeight="shorter"
-    >
-      {caseStudy.role}
-    </chakra.p>
-  </VStack>
-</Box>
+            <Box
+              position="relative"
+              p={{ base: 6, md: 8 }}
+              borderRadius="2xl"
+              bg={useColorModeValue(
+                'linear-gradient(135deg, rgba(99, 102, 241, 0.05) 0%, rgba(168, 85, 247, 0.05) 100%)',
+                'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)'
+              )}
+              backdropFilter="blur(10px)"
+              boxShadow={useColorModeValue(
+                '0 20px 60px rgba(99, 102, 241, 0.15)',
+                '0 20px 60px rgba(0, 0, 0, 0.7)'
+              )}
+              border="1px solid"
+              borderColor={useColorModeValue('purple.100', 'purple.900')}
+              overflow="hidden"
+              _before={{
+                content: '""',
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                height: '3px',
+                bgGradient: 'linear(to-r, purple.400, pink.400, orange.400)',
+              }}
+            >
+              <VStack spacing={5}>
+                <Badge
+                  colorScheme="purple"
+                  px={4}
+                  py={1}
+                  borderRadius="full"
+                  fontSize="xs"
+                  fontWeight="semibold"
+                  textTransform="uppercase"
+                  letterSpacing="wide"
+                >
+                  My Role
+                </Badge>
+
+                <chakra.p
+                  fontSize={{ base: 'xl', md: '2xl', lg: '3xl' }}
+                  bgGradient="linear(to-r, purple.400, pink.500)"
+                  bgClip="text"
+                  textAlign="center"
+                  maxW="3xl"
+                  fontWeight="extrabold"
+                  mx="auto"
+                  lineHeight="shorter"
+                  px={4}
+                >
+                  {caseStudy.role}
+                </chakra.p>
+              </VStack>
+            </Box>
           </VStack>
         </Container>
       </Box>
