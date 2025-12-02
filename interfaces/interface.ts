@@ -1,3 +1,5 @@
+// interfaces/interface.ts
+
 export interface IArticle {
   id?: number;
   title: string;
@@ -53,25 +55,25 @@ export interface BlogPostProps {
   posts: BlogPost[];
 }
 
-// interfaces/interface.ts
 export interface ProjectCaseStudy {
-  images: string[]          
-    longDescription: string | string[]; 
-  role?: string             
-  responsibilities?: string[]
-  challenges?: string[]
-  results?: string[]
+  images: string[];
+  longDescription: string | string[];
+  role?: string;
+  responsibilities?: string[];
+  challenges?: string[];
+  results?: string[];
 }
 
 export interface Project {
-  id: number
-  title: string
-  imageLight: string
-  blurHash?: string
-  site?: string
-  description: string
-  techStack: string[]
-  caseStudy?: ProjectCaseStudy 
+  id: number;
+  slug: string;
+  title: string;
+  imageLight: string;
+  blurHash?: string;
+  site?: string;
+  description: string;
+  techStack: string[];
+  caseStudy?: ProjectCaseStudy;
 }
 
 export interface ProjectProps {
