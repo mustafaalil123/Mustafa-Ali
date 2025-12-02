@@ -22,12 +22,13 @@ import {
   MotionText
 } from 'components/shared/animations/motion';
 
-const goToDetail = (router, id: number) => {
+const goToDetail = (router, slug: string) => {
   router.push({
     pathname: '/ProjectDetail',
-    query: { id }
+    query: { slug }
   });
 };
+
 
 const ProjectLayoutMed = ({ project }) => {
   const router = useRouter();
@@ -53,7 +54,7 @@ const ProjectLayoutMed = ({ project }) => {
         w="full"
         h="12rem"
         cursor="pointer"
-        onClick={() => goToDetail(router, project.id)}
+onClick={() => goToDetail(router, project.slug)}
       >
         <AspectRatio ratio={1.85 / 1} w="100%" h="100%">
           <Image
@@ -80,7 +81,7 @@ const ProjectLayoutMed = ({ project }) => {
         <MotionBox variants={stagger}>
           <Box
             cursor="pointer"
-            onClick={() => goToDetail(router, project.id)}
+            onClick={() => goToDetail(router, project.slug)}
           >
             <MotionText
               variants={fadeInUp}
@@ -178,7 +179,7 @@ const LeftProjectLayoutLarge = ({ project }) => {
         overflow="hidden"
         position="relative"
         cursor="pointer"
-        onClick={() => goToDetail(router, project.id)}
+onClick={() => goToDetail(router, project.slug)}
       >
         <AspectRatio ratio={1.85 / 1} w="100%" h="100%" rounded="xl">
           <Image
@@ -209,7 +210,7 @@ const LeftProjectLayoutLarge = ({ project }) => {
         <motion.div variants={stagger}>
           <Box
             cursor="pointer"
-            onClick={() => goToDetail(router, project.id)}
+onClick={() => goToDetail(router, project.slug)}
           >
             <MotionText
               variants={fadeInUp}
@@ -303,7 +304,7 @@ const RightProjectLayoutLarge = ({ project }) => {
         <motion.div variants={stagger}>
           <Box
             cursor="pointer"
-            onClick={() => goToDetail(router, project.id)}
+onClick={() => goToDetail(router, project.slug)}
           >
             <MotionText
               variants={fadeInUp}
@@ -398,7 +399,7 @@ const RightProjectLayoutLarge = ({ project }) => {
         overflow="hidden"
         position="relative"
         cursor="pointer"
-        onClick={() => goToDetail(router, project.id)}
+onClick={() => goToDetail(router, project.slug)}
       >
         <AspectRatio ratio={1.85 / 1} w="100%" h="100%" rounded="xl">
           <Image

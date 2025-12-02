@@ -1,3 +1,5 @@
+// pages/ProjectDetail.tsx
+
 import { GetServerSideProps, NextPage } from 'next';
 import { useState } from 'react';
 import {
@@ -72,7 +74,6 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
     );
   };
 
-  // normalise longDescription for bullets and meta description
   const longRaw = caseStudy.longDescription;
   const overviewItems = Array.isArray(longRaw) ? longRaw : [longRaw];
   const metaDescription = overviewItems[0] || project.description;
@@ -80,7 +81,6 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
   return (
     <PageLayout title={project.title} description={metaDescription}>
       <Box position="relative" overflow="hidden" bg={pageBg}>
-        {/* background blobs */}
         <Box
           position="absolute"
           top="-20%"
@@ -115,7 +115,6 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
           zIndex={1}
         >
           <VStack align="stretch" spacing={12} py={12}>
-            {/* hero card */}
             <Box
               position="relative"
               p={{ base: 8, md: 12 }}
@@ -138,7 +137,12 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
               />
 
               <VStack align="stretch" spacing={8} w="100%">
-                <HStack justify="space-between" align="center" flexWrap="wrap" gap={4}>
+                <HStack
+                  justify="space-between"
+                  align="center"
+                  flexWrap="wrap"
+                  gap={4}
+                >
                   <Box
                     px={4}
                     py={2}
@@ -192,14 +196,12 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
                   lineHeight="1.1"
                   textAlign="center"
                   padding={4}
-                  
                 >
                   {project.title}
                 </Heading>
               </VStack>
             </Box>
 
-            {/* Description card */}
             <Box
               p={{ base: 6, md: 8 }}
               borderRadius="2xl"
@@ -259,7 +261,6 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
               )}
             </Box>
 
-            {/* screenshots carousel */}
             {hasCarousel && (
               <Box>
                 <Heading
@@ -501,7 +502,6 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
               </Box>
             )}
 
-            {/* role card */}
             <Box
               position="relative"
               p={{ base: 6, md: 8 }}
@@ -567,9 +567,20 @@ const ProjectDetail: NextPage<ProjectDetailProps> = ({ project }) => {
 export const getServerSideProps: GetServerSideProps<ProjectDetailProps> = async (
   context
 ) => {
-  const idParam = context.query.id;
-  const id = Number(idParam);
-  const project = projectsList.find((p) => p.id === id);
+  const slugParam = context.query.slug;
+
+  const slug =
+    Array.isArray(slugParam) && slugParam.length > 0
+      ? slugParam[0]
+      : typeof slugParam === 'string'
+      ? slugParam
+      : null;
+
+  if (!slug) {
+    return { notFound: true };
+  }
+
+  const project = projectsList.find((p) => p.slug === slug);
 
   if (!project || !project.caseStudy) {
     return { notFound: true };
