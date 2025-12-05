@@ -619,220 +619,183 @@ const inactiveDotColor = useColorModeValue(
             </Box>
 
             {/* Testimonial section */}
-            <Box
-              w="100%"
-              py="40px"
-              borderRadius="24px"
-              backdropFilter="blur(12px)"
-              bg="rgba(255,255,255,0.05)"
-              border="1px solid rgba(255,255,255,0.1)"
-              boxShadow="0 25px 50px -12px rgba(0,0,0,0.6)"
-            >
-              <Box textAlign="center" mb="32px">
-               <Text
-  as="span"
-  display="inline-flex"
-  alignItems="center"
-  gap="8px"
-  px="16px"
-  py="8px"
-  borderRadius="999px"
-  bg={useColorModeValue(
-    'rgba(129,140,248,0.12)',   // light mode
-    'rgba(168,85,247,0.15)'     // dark mode
-  )}
-  border="1px solid"
-  borderColor={useColorModeValue(
-    'rgba(129,140,248,0.4)',    // light mode
-    'rgba(168,85,247,0.4)'      // dark mode
-  )}
-  mb="16px"
+           {/* Testimonial section */}
+<Box
+  w="100%"
+  py="40px"
+  borderRadius="24px"
+  backdropFilter="blur(12px)"
+  bg="rgba(255,255,255,0.05)"
+  border="1px solid rgba(255,255,255,0.1)"
+  boxShadow="0 25px 50px -12px rgba(0,0,0,0.6)"
+  mt="12"
 >
-  <FiStar
-    size={16}
-    color={useColorModeValue(
-      '#6366f1',  // light mode icon color
-      '#c4b5fd'   // dark mode icon color
-    )}
-  />
+  {/* Heading */}
+  <Box textAlign="center" mb="32px">
+    <Text
+      as="span"
+      display="inline-flex"
+      alignItems="center"
+      gap="8px"
+      px="16px"
+      py="8px"
+      borderRadius="999px"
+      bg={useColorModeValue('rgba(129,140,248,0.12)', 'rgba(168,85,247,0.15)')}
+      border="1px solid"
+      borderColor={useColorModeValue('rgba(129,140,248,0.4)', 'rgba(168,85,247,0.4)')}
+      mb="16px"
+    >
+      <FiStar size={16} color={useColorModeValue('#6366f1', '#c4b5fd')} />
 
-  <Text
-    as="span"
-    fontSize="sm"
-    color={useColorModeValue(
-      '#111827',  // text becomes dark in light mode
-      '#e5e7eb'   // text becomes light in dark mode
-    )}
-    fontWeight={500}
-  >
-    Client Testimonials
-  </Text>
-</Text>
+      <Text as="span" fontSize="sm" fontWeight={500} color={useColorModeValue('#111827','#e5e7eb')}>
+        Client Testimonials
+      </Text>
+    </Text>
 
+    <Heading
+      as="h3"
+      fontSize={{ base: '2xl', md: '3xl' }}
+      color={linkColor}
+      mb="8px"
+    >
+      What People Say About <chakra.span color={linkColor}>Working With Me</chakra.span>
+    </Heading>
 
-                <Heading
-                  as="h3"
-                  fontSize={{ base: '2xl', md: '3xl' }}
-                  color={
-                    linkColor}
-                  mb="8px"
-                >
-                  What People Say About{' '}
-                  <chakra.span
-                    color={linkColor}
-                  >
-                    Working With Me
-                  </chakra.span>
-                </Heading>
+    <Text
+      color={useColorModeValue('#111827', 'white')}
+      fontSize="lg"
+      maxW="640px"
+      mx="auto"
+    >
+      Real feedback from real projects. Every testimonial represents a successful collaboration.
+    </Text>
+  </Box>
 
-                <Text
-                  color={useColorModeValue('#111827', 'white')}
-                  fontSize="lg"
-                  maxW="640px"
-                  mx="auto"
-                >
-                  Real feedback from real projects. Every testimonial represents a
-                  successful collaboration.
-                </Text>
-              </Box>
+  {/* Carousel */}
+  <Box maxW="960px" mx="auto">
+    <Box
+      borderRadius="16px"
+      border="1px solid rgba(255,255,255,0.18)"
+      p={{ base: '24px', md: '40px' }}
+      bg={linkColor}
+      boxShadow="0 25px 50px -12px rgba(0,0,0,0.8)"
+    >
+      {/* Avatar + Name */}
+      <Flex align="center" gap="12px" flex="1" minW={0} mb="16px">
+        
+        {/* Avatar (fixed) */}
+        <Box
+          w="56px"
+          h="56px"
+          borderRadius="full"
+          overflow="hidden"
+          bgGradient="linear(to-br, #a855f7, #ec4899)"
+          flexShrink={0}
+          boxShadow="0 10px 25px rgba(168,85,247,0.7)"
+        >
+          <img
+            src={activeTestimonial.img}
+            alt={activeTestimonial.name}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              display: 'block',
+            }}
+          />
+        </Box>
 
-              {/* Carousel view */}
-              <Box maxW="960px" mx="auto">
-                <Box
-                  borderRadius="16px"
-                  border="1px solid rgba(255,255,255,0.18)"
-                  p={{ base: '24px', md: '40px' }}
-                  bg={linkColor}
-                  boxShadow="0 25px 50px -12px rgba(0,0,0,0.8)"
-                >
-                  <Flex align="center" gap="12px" flex="1" minW={0} mb="16px">
-                    <Box
-                      w="56px"
-                      h="56px"
-                      borderRadius="full"
-                      bgGradient="linear(to-br, #a855f7, #ec4899)"
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      color="white"
-                      fontSize="24px"
-                      fontWeight="bold"
-                      boxShadow="0 10px 25px rgba(168,85,247,0.7)"
-                      flexShrink={0}
-                    >
-                      <img
-                        style={{ borderRadius: '50%' }}
-                        src={activeTestimonial.img}
-                        alt={activeTestimonial.name}
-                      />
-                    </Box>
+        {/* Text */}
+        <Box textAlign="left" minW={0}>
+          <Text
+            color="white"
+            fontWeight="semibold"
+            fontSize="md"
+            mb="2px"
+            noOfLines={1}
+          >
+            {activeTestimonial.name}
+          </Text>
 
-                    <Box textAlign="left" minW={0}>
-                      <Text
-                        color="white"
-                        fontWeight="semibold"
-                        fontSize="md"
-                        mb="2px"
-                        noOfLines={1}
-                      >
-                        {activeTestimonial.name}
-                      </Text>
+          <Text
+            color="rgba(209,213,219,1)"
+            fontSize="sm"
+            whiteSpace="normal"
+            wordBreak="break-word"
+          >
+            {activeTestimonial.role}
+          </Text>
+        </Box>
+      </Flex>
 
-                      <Text
-                        color="rgba(209,213,219,1)"
-                        fontSize="sm"
-                        whiteSpace="normal"
-                        wordBreak="break-word"
-                      >
-                        {activeTestimonial.role}
-                      </Text>
-                    </Box>
-                  </Flex>
+      {/* Quote */}
+      <Box display="flex" flexDirection="column" minHeight="150px" textAlign="left">
+        <Text
+          id={quoteId}
+          color="rgba(249,250,251,1)"
+          fontSize={15}
+          lineHeight="1.8"
+        >
+          {displayedQuote}
+        </Text>
 
-                  <Box
-                    display="flex"
-                    flexDirection="column"
-                    minHeight="150px"
-                  >
-                    <Text
-                      id={quoteId}
-                      color="rgba(249,250,251,1)"
-                      fontSize={15}
-                      lineHeight="1.8"
-                      textAlign="left"
-                      flex="0 0 auto"
-                    >
-                      {displayedQuote}
-                    </Text>
+        {isLongQuote && (
+          <chakra.button
+            onClick={() => setIsQuoteExpanded(v => !v)}
+            color="white"
+            fontSize="sm"
+            fontWeight="semibold"
+            mt="10px"
+            alignSelf="flex-start"
+            _hover={{ textDecoration: 'underline' }}
+          >
+            {isQuoteExpanded ? 'See less' : 'See more'}
+          </chakra.button>
+        )}
+      </Box>
+    </Box>
 
-                 <chakra.button
-  onClick={() => setIsQuoteExpanded(v => !v)}
-  color={useColorModeValue('#fdfdfdff', '#ffffff')}
-  fontSize="sm"
-  fontWeight="semibold"
-  _hover={{ textDecoration: 'underline' }}
-  aria-expanded={isQuoteExpanded}
->
-  {isQuoteExpanded ? 'See less' : 'See more'}
-</chakra.button>
+    {/* Navigation */}
+    <Flex justify="center" align="center" gap="24px" mt="24px" flexWrap="wrap">
+      <Button
+        onClick={() => setActiveIndex((activeIndex - 1 + testimonials.length) % testimonials.length)}
+        borderRadius="full"
+        w="48px"
+        h="48px"
+        bg="rgba(15,23,42,0.9)"
+        border="1px solid rgba(255,255,255,0.18)"
+        color="white"
+        _hover={{ bg: 'rgba(15,23,42,0.8)', transform: 'scale(1.05)' }}
+      >
+        <FiChevronLeft />
+      </Button>
 
-                  </Box>
-                </Box>
+      <Flex align="center" gap="8px">
+        {testimonials.map((_, index) => (
+          <Box
+            key={index}
+            style={dotStyle(index)}
+            onClick={() => setActiveIndex(index)}
+          />
+        ))}
+      </Flex>
 
-                <Flex justify="center" align="center" gap="24px" mt="24px">
-                  <Button
-                    onClick={() =>
-                      setActiveIndex(
-                        (activeIndex - 1 + testimonials.length) %
-                          testimonials.length,
-                      )
-                    }
-                    borderRadius="full"
-                    w="48px"
-                    h="48px"
-                    bg="rgba(15,23,42,0.9)"
-                    border="1px solid rgba(255,255,255,0.18)"
-                    color="white"
-                    _hover={{
-                      bg: 'rgba(15,23,42,0.8)',
-                      transform: 'scale(1.05)',
-                    }}
-                  >
-                    <FiChevronLeft />
-                  </Button>
+      <Button
+        onClick={() => setActiveIndex((activeIndex + 1) % testimonials.length)}
+        borderRadius="full"
+        w="48px"
+        h="48px"
+        bg="rgba(15,23,42,0.9)"
+        border="1px solid rgba(255,255,255,0.18)"
+        color="white"
+        _hover={{ bg: 'rgba(15,23,42,0.8)', transform: 'scale(1.05)' }}
+      >
+        <FiChevronRight />
+      </Button>
+    </Flex>
+  </Box>
+</Box>
 
-                  <Flex align="center" gap="8px">
-                    {testimonials.map((_, index) => (
-                      <Box
-                        key={index}
-                        style={dotStyle(index)}
-                        onClick={() => {
-                          setActiveIndex(index);
-                        }}
-                      />
-                    ))}
-                  </Flex>
-
-                  <Button
-                    onClick={() =>
-                      setActiveIndex((activeIndex + 1) % testimonials.length)
-                    }
-                    borderRadius="full"
-                    w="48px"
-                    h="48px"
-                    bg="rgba(15,23,42,0.9)"
-                    border="1px solid rgba(255,255,255,0.18)"
-                    color="white"
-                    _hover={{
-                      bg: 'rgba(15,23,42,0.8)',
-                      transform: 'scale(1.05)',
-                    }}
-                  >
-                    <FiChevronRight />
-                  </Button>
-                </Flex>
-              </Box>
-            </Box>
           </Box>
         </div>
 
