@@ -1,5 +1,5 @@
 // pages/certificate.tsx
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useCallback, memo } from 'react';
 import {
   Box,
   Stack,
@@ -14,14 +14,14 @@ import {
   Collapse,
   Link as ChakraLink,
   Wrap,
-  WrapItem
+  WrapItem,
 } from '@chakra-ui/react';
 import { FaCertificate } from 'react-icons/fa';
 
 import {
   PageSlideFade,
   StaggerChildren,
-  CardTransition
+  CardTransition,
 } from 'components/shared/animations/page-transitions';
 import { MotionBox } from 'components/shared/animations/motion';
 import PageLayout from 'components/layouts/pageLayout';
@@ -34,7 +34,9 @@ import { certifications } from 'data/certificateData';
 const MAX_CONTENT_WIDTH = '960px';
 const CARD_SPACING = 6;
 
-const Card: React.FC<CardData> = ({
+type CardProps = CardData;
+
+const Card = memo(function Card({
   title,
   role,
   skills = [],
@@ -42,11 +44,12 @@ const Card: React.FC<CardData> = ({
   logo,
   alt,
   points = [],
-  link
-}) => {
+  link,
+}: CardProps) {
+  // Chakra hooks must be called, but keep them local and minimal
   const bgGradient = useColorModeValue(
     'linear(to-br, white, gray.50)',
-    'linear(to-br, gray.800, gray.900)'
+    'linear(to-br, gray.800, gray.900)',
   );
   const borderColor = useColorModeValue('gray.200', 'gray.700');
   const headingColor = useColorModeValue('gray.900', 'white');
@@ -57,9 +60,15 @@ const Card: React.FC<CardData> = ({
   const buttonColor = useColorModeValue('cyan.700', 'cyan.300');
 
   const [expanded, setExpanded] = useState(false);
+  const toggleExpanded = useCallback(() => setExpanded((v) => !v), []);
 
-  const firstThree = useMemo(() => points.slice(0, 3), [points]);
-  const remaining = useMemo(() => points.slice(3), [points]);
+  // Only compute slices once per points change
+  const { firstThree, remaining } = useMemo(() => {
+    return { firstThree: points.slice(0, 3), remaining: points.slice(3) };
+  }, [points]);
+
+  const hasSkills = skills.length > 0;
+  const hasFooterRow = hasSkills || Boolean(link);
 
   return (
     <CardTransition>
@@ -73,11 +82,12 @@ const Card: React.FC<CardData> = ({
           bgGradient={bgGradient}
           rounded="2xl"
           shadow="md"
-          transition="all 0.2s ease"
+          transition="transform 0.2s ease, box-shadow 0.2s ease"
           overflow="hidden"
+          willChange="transform"
           _hover={{
             shadow: 'lg',
-            transform: 'translateY(-2px)'
+            transform: 'translateY(-2px)',
           }}
         >
           {/* Top Gradient Bar */}
@@ -101,6 +111,7 @@ const Card: React.FC<CardData> = ({
               gap={{ base: 3, sm: 4 }}
               flexDir={{ base: 'column', sm: 'row' }}
               align={{ base: 'flex-start', sm: 'center' }}
+              minW={0}
             >
               {/* Logo */}
               <Image
@@ -109,22 +120,27 @@ const Card: React.FC<CardData> = ({
                 src={logo}
                 alt={alt || title}
                 objectFit="cover"
+                loading="lazy"
+                decoding="async"
                 fallbackSrc="/assets/images/placeholder.png"
               />
 
               {/* Text Content */}
-              <Stack spacing={{ base: 2, md: 3 }}>
+              <Stack spacing={{ base: 2, md: 3 }} minW={0}>
                 <Heading
                   fontSize={{ base: 'lg', sm: 'xl', md: '2xl' }}
                   color={headingColor}
+                  noOfLines={2}
                 >
                   {title}
                 </Heading>
+
                 {role && (
                   <Text
                     fontSize={{ base: 'sm', md: 'md' }}
                     color={textColor}
                     textAlign="left"
+                    noOfLines={{ base: 3, md: 2 }}
                   >
                     {role}
                   </Text>
@@ -134,10 +150,7 @@ const Card: React.FC<CardData> = ({
 
             {/* Period */}
             {period && (
-              <Flex
-                align="center"
-                justify={{ base: 'flex-start', md: 'flex-end' }}
-              >
+              <Flex align="center" justify={{ base: 'flex-start', md: 'flex-end' }}>
                 <Badge
                   colorScheme="cyan"
                   px={4}
@@ -156,29 +169,17 @@ const Card: React.FC<CardData> = ({
           {/* Points */}
           <Box mt={4}>
             {firstThree.map((p, i) => (
-              <Text
-                key={i}
-                fontSize="sm"
-                color={textColor}
-                mb={1}
-                textAlign="left"
-              >
+              <Text key={i} fontSize="sm" color={textColor} mb={1} textAlign="left">
                 • {p}
               </Text>
             ))}
 
             {remaining.length > 0 && (
               <>
-                <Collapse in={expanded}>
+                <Collapse in={expanded} animateOpacity>
                   <Box mt={2}>
                     {remaining.map((p, i) => (
-                      <Text
-                        key={i}
-                        fontSize="sm"
-                        color={textColor}
-                        mb={1}
-                        textAlign="left"
-                      >
+                      <Text key={i} fontSize="sm" color={textColor} mb={1} textAlign="left">
                         • {p}
                       </Text>
                     ))}
@@ -190,7 +191,7 @@ const Card: React.FC<CardData> = ({
                   colorScheme="cyan"
                   size="sm"
                   mt={2}
-                  onClick={() => setExpanded(!expanded)}
+                  onClick={toggleExpanded}
                 >
                   {expanded ? 'See less' : `See more (${remaining.length})`}
                 </Button>
@@ -199,7 +200,7 @@ const Card: React.FC<CardData> = ({
           </Box>
 
           {/* Skills and Visit button on same row */}
-          {(skills.length > 0 || link) && (
+          {hasFooterRow && (
             <Flex
               mt={4}
               justify="space-between"
@@ -207,7 +208,7 @@ const Card: React.FC<CardData> = ({
               flexDir={{ base: 'column', sm: 'row' }}
               gap={4}
             >
-              {skills.length > 0 && (
+              {hasSkills && (
                 <Wrap spacing={2}>
                   {skills.map((skill) => (
                     <WrapItem key={skill}>
@@ -239,7 +240,7 @@ const Card: React.FC<CardData> = ({
                   color={buttonColor}
                   _hover={{
                     bg: buttonBgHover,
-                    textDecoration: 'none'
+                    textDecoration: 'none',
                   }}
                 >
                   Visit Certificate
@@ -251,10 +252,13 @@ const Card: React.FC<CardData> = ({
       </MotionBox>
     </CardTransition>
   );
-};
+});
 
 const Certificate: React.FC = () => {
   const linkColor = useLinkColor();
+
+  // keep mapping stable
+  const items = useMemo(() => certifications, []);
 
   return (
     <PageLayout title="Certificate" description="My technical certifications">
@@ -285,12 +289,7 @@ const Certificate: React.FC = () => {
                   />
                 </Flex>
 
-                <Header
-                  id="certification-heading"
-                  color={linkColor}
-                  mt={0}
-                  mb={0}
-                >
+                <Header id="certification-heading" color={linkColor} mt={0} mb={0}>
                   Certifications
                 </Header>
               </Flex>
@@ -307,7 +306,7 @@ const Certificate: React.FC = () => {
             w="full"
             px={{ base: 4, sm: 6, md: 0 }}
           >
-            {certifications.map((cert, index) => (
+            {items.map((cert, index) => (
               <MotionBox key={cert.title || index}>
                 <Card {...cert} />
               </MotionBox>
