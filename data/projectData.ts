@@ -300,8 +300,8 @@ export const projectsList: Project[] = [
   },
   {
     id: 11,
-    slug: 'PassionTree',
-    title: 'PassionTree',
+    slug: 'PensionTree',
+    title: 'PensionTree',
     imageLight: '/assets/images/PassionTree/2.PNG',
     blurHash: 'L2M5%%0000EN00I:-oIp00kC?^sl',
     site: 'https://mypensiontree.com/',
@@ -325,19 +325,19 @@ export const projectsList: Project[] = [
         '/assets/images/PassionTree/13.PNG',
         '/assets/images/PassionTree/14.PNG'
       ],
-     longDescription: [
-  'Smart business owners do not settle for standard retirement limits. My Pension Tree helps business owners go far beyond traditional options like SEP IRAs by unlocking significantly higher tax deductible retirement contributions.',
-  'Owner Benefit Plans from My Pension Tree are IRS approved retirement strategies designed specifically for high earning entrepreneurs and closely held business owners.',
-  'Unlike cookie cutter retirement plans, each Owner Benefit Plan is fully customized based on your age, income and business structure to maximize deductions and long term retirement growth.',
-  'On average, clients are able to contribute over $214,083 more per year compared to a SEP IRA, allowing retirement savings to scale alongside business success.',
-  'My Pension Tree removes all administrative burden by handling actuarial design, IRS compliance, annual filings and ongoing plan management, so business owners can stay focused on running their companies.',
-  'These plans are structured to maximize deductions and accelerate retirement savings, often allowing contributions up to three times greater than traditional SEP IRAs or 401(k) plans.',
-  'Contribution limits are determined by age and income, which means higher earning and older business owners can unlock even greater tax advantages.',
-  'Real clients have achieved substantial results, including saving over $101,850 annually in taxes by contributing more than $203,000 to a customized Owner Benefit Plan.',
-  'Other business owners have restructured their companies with My Pension Tree and now contribute up to $376,700 per year to retirement while saving over $169,515 annually in combined federal and state taxes.',
-  'In simple terms, My Pension Tree helps business owners reduce taxes, grow retirement savings faster and offload all complexity by managing every detail of the retirement plan on their behalf.'
+longDescription: [
+  'My Pension Tree is a platform designed to help high earning business owners access IRS approved Owner Benefit Plans that allow significantly higher tax deductible retirement contributions compared to traditional options like SEP IRAs and 401(k) plans.',
+  'The project focuses on delivering fully customized retirement strategies based on a business owner’s age, income and company structure, enabling retirement savings to scale alongside business growth.',
+  'A core goal of the platform is to remove complexity by handling actuarial design, IRS compliance and ongoing administration, allowing users to focus entirely on running their businesses.',
+  'The solution highlights proven real world outcomes, including six figure annual tax savings and retirement contributions exceeding $200,000 for qualified business owners.',
+  'The platform also emphasizes trust and transparency by showcasing real client testimonials, quantified tax savings and clear explanations of how Owner Benefit Plans work.',
+  'Worked as a Frontend Developer on this project, responsible for building responsive, high performance user interfaces that clearly communicate complex financial and tax related information.',
+  'Translated detailed retirement and tax saving concepts into clean, user friendly layouts that improve clarity, engagement and conversion for business owners.',
+  'Developed reusable and scalable frontend components to present plan benefits, contribution comparisons and testimonials consistently across the site.',
+  'Collaborated with stakeholders to refine messaging and visual hierarchy, ensuring the frontend accurately reflects business value while remaining easy to understand.',
+  'Focused on performance, accessibility and maintainability to deliver a fast, reliable and future ready frontend experience.'
 ],
-      role: 'FullStack'
+      role: 'Frontend Developer'
     }
   }
 ];
